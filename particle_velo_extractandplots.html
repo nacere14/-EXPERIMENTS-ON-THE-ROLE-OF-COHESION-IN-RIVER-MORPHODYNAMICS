@@ -1,0 +1,685 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>particle_velo_extractandplots</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-06-10">
+<meta name="DC.source" content="particle_velo_extractandplots.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#5">CM/S x - dir</a>
+</li>
+<li>
+<a href="#7">CM/S y dir</a>
+</li>
+<li>
+<a href="#9">velo y</a>
+</li>
+<li>
+<a href="#10">time array</a>
+</li>
+<li>
+<a href="#11">normalized time</a>
+</li>
+<li>
+<a href="#13">non dimensionalize particle velocity (Aaron idea) so here discharge divided by cross sectional area</a>
+</li>
+<li>
+<a href="#14">y velocitiies</a>
+</li>
+<li>
+<a href="#17">XANTHAN GUM X-DIR</a>
+</li>
+<li>
+<a href="#18">y direction</a>
+</li>
+<li>
+<a href="#19">XANTHAN GUM Y DIR</a>
+</li>
+<li>
+<a href="#20">non dimensionalize y</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">clc;
+clear <span class="string">all</span>;
+close <span class="string">all</span>;
+</pre>
+<pre class="codeinput">load(<span class="string">"conversionfxg5.mat"</span>);
+</pre>
+<pre class="codeoutput error">Error using load
+Unable to find file or directory 'conversionfxg5.mat'.
+
+Error in particle_velo_extractandplots (line 5)
+load("conversionfxg5.mat");
+</pre>
+<pre class="codeinput">load(<span class="string">'velo_xxg05_threshmean.mat'</span>);
+load(<span class="string">"velo_yxg05_threshmean.mat"</span>);
+</pre>
+<pre class="codeinput">velocity_xavg(:,55:59)=[];
+velocity_yavg(:,55:59)=[];
+</pre>
+<h2 id="5">CM/S x - dir</h2>
+<pre class="codeinput">velo_cm=velocity_xavg./50;
+velocitycm=velo_cm.*60;
+veloci_cm=velocitycm./length_all;
+</pre>
+<pre class="codeinput">save(<span class="string">'velo_xcmxg05.mat'</span>,<span class="string">'veloci_cm'</span>);
+</pre>
+<h2 id="7">CM/S y dir</h2>
+<pre class="codeinput">velo_cmy=velocity_yavg./50;
+velocitycmy=velo_cmy.*60;
+veloci_cmy=velocitycmy./length_all;
+save(<span class="string">'velo_ycmxg05.mat'</span>,<span class="string">'veloci_cmy'</span>);
+</pre>
+<pre class="codeinput">data0=load(<span class="string">'velo_xcmxg0.mat'</span>);
+data1=load(<span class="string">"velo_xcmxg01.mat"</span>);
+data2=load(<span class="string">"velo_xcmxg02.mat"</span>);
+data3=load(<span class="string">"velo_xcmxg03.mat"</span>);
+data4=load(<span class="string">"velo_xcmxg04.mat"</span>);
+data5=load(<span class="string">"velo_xcmxg05.mat"</span>);
+
+velox0=data0.veloci_cm;
+velox1=data1.veloci_cm;
+velox2=data2.veloci_cm;
+velox3=data3.veloci_cm;
+velox4=data4.veloci_cm;
+velox5=data5.veloci_cm;
+</pre>
+<h2 id="9">velo y</h2>
+<pre class="codeinput">data6=load(<span class="string">'velo_ycmxg0.mat'</span>);
+data7=load(<span class="string">"velo_ycmxg01.mat"</span>);
+data8=load(<span class="string">"velo_ycmxg02.mat"</span>);
+data9=load(<span class="string">"velo_ycmxg03.mat"</span>);
+data10=load(<span class="string">"velo_ycmxg04.mat"</span>);
+data11=load(<span class="string">"velo_ycmxg05.mat"</span>);
+
+veloy0=data6.veloci_cm;
+veloy1=data7.veloci_cmy;
+veloy2=data8.veloci_cmy;
+veloy3=data9.veloci_cmy;
+veloy4=data10.veloci_cmy;
+veloy5=data11.veloci_cmy;
+</pre>
+<h2 id="10">time array</h2>
+<pre class="codeinput">time0=load(<span class="string">'Timexg0.mat'</span>);
+time1=load(<span class="string">'Timexg01.mat'</span>);
+time2=load(<span class="string">'Timexg02.mat'</span>);
+time3=load(<span class="string">'Timexg03.mat'</span>);
+time4=load(<span class="string">'Timexg04.mat'</span>);
+time5=load(<span class="string">'Timexg05.mat'</span>);
+
+timexg0=time0.time_array;
+timexg1=time1.time_array;
+timexg2=time2.time_array;
+timexg3=time3.time_array;
+timexg4=time4.time_array;
+timexg5=time5.time_array;
+</pre>
+<h2 id="11">normalized time</h2>
+<pre class="codeinput">times_norxg0=(timexg0-min(timexg0))/(max(timexg0)-min(timexg0));
+times_norxg1=(timexg1-min(timexg1))/(max(timexg1)-min(timexg1));
+times_norxg2=(timexg2-min(timexg2))/(max(timexg2)-min(timexg2));
+times_norxg3=(timexg3-min(timexg3))/(max(timexg3)-min(timexg3));
+times_norxg4=(timexg4-min(timexg4))/(max(timexg4)-min(timexg4));
+times_norxg5=(timexg5-min(timexg5))/(max(timexg5)-min(timexg5));
+</pre>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+</pre>
+<h2 id="13">non dimensionalize particle velocity (Aaron idea) so here discharge divided by cross sectional area</h2>
+<p>of the notch</p>
+<pre class="codeinput">velocities=[3.4725;3.4725;3.4725;5.56;6.2645;6.2645]; <span class="comment">%cm/s</span>
+<span class="comment">%non dimensionalize velocities</span>
+v0=velox0/3.4735;
+v1=velox1/3.4735;
+v2=velox2/3.4735;
+v3=velox3/5.56;
+v4=velox4/6.2645;
+v5=velox5/6.2645;
+</pre>
+<h2 id="14">y velocitiies</h2>
+<pre class="codeinput">vy0=veloy0/3.4735;
+vy1=veloy1/3.4735;
+vy2=veloy2/3.4735;
+vy3=veloy3/5.56;
+vy4=veloy4/6.2645;
+vy5=veloy5/6.2645;
+</pre>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+figure;
+hold <span class="string">on</span>;
+colors=orderedcolors(<span class="string">'meadow'</span>);
+markers = {<span class="string">'o'</span>, <span class="string">'s'</span>, <span class="string">'d'</span>, <span class="string">'^'</span>, <span class="string">'x'</span>, <span class="string">'*'</span>};
+plot(timexg0, v0, <span class="string">'Color'</span>, colors(1,:), <span class="string">'Marker'</span>, markers{1}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0% Xanthan Gum'</span>);
+plot(timexg1, v1, <span class="string">'Color'</span>, colors(2,:), <span class="string">'Marker'</span>, markers{2}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.1% Xanthan Gum'</span>);
+plot(timexg2, v2, <span class="string">'Color'</span>, colors(3,:), <span class="string">'Marker'</span>, markers{3}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.2% Xanthan Gum'</span>);
+plot(timexg3, v3, <span class="string">'Color'</span>, colors(4,:), <span class="string">'Marker'</span>, markers{4}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.3% Xanthan Gum'</span>);
+plot(timexg4, v4, <span class="string">'Color'</span>, colors(5,:), <span class="string">'Marker'</span>, markers{5}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.4% Xanthan Gum'</span>);
+plot(timexg5, v5, <span class="string">'Color'</span>, colors(6,:), <span class="string">'Marker'</span>, markers{6}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.5% Xanthan Gum'</span>);
+
+set(gca,<span class="string">'FontSize'</span>,13);
+xlabel(<span class="string">'Time (s)'</span>, <span class="string">'FontSize'</span>, 13, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Normalized Velocity in Streamwise Direction'</span>, <span class="string">'FontSize'</span>, 13, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+<span class="comment">%grid on;</span>
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'normalizeveloxtime_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+figure;
+hold <span class="string">on</span>;
+colors=orderedcolors(<span class="string">'meadow'</span>);
+markers = {<span class="string">'o'</span>, <span class="string">'s'</span>, <span class="string">'d'</span>, <span class="string">'^'</span>, <span class="string">'x'</span>, <span class="string">'*'</span>};
+plot(timexg0, velox0, <span class="string">'Color'</span>, colors(1,:), <span class="string">'Marker'</span>, markers{1}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0% Xanthan Gum'</span>);
+plot(timexg1, velox1, <span class="string">'Color'</span>, colors(2,:), <span class="string">'Marker'</span>, markers{2}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.1% Xanthan Gum'</span>);
+plot(timexg2, velox2, <span class="string">'Color'</span>, colors(3,:), <span class="string">'Marker'</span>, markers{3}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.2% Xanthan Gum'</span>);
+plot(timexg3, velox3, <span class="string">'Color'</span>, colors(4,:), <span class="string">'Marker'</span>, markers{4}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.3% Xanthan Gum'</span>);
+plot(timexg4, velox4, <span class="string">'Color'</span>, colors(5,:), <span class="string">'Marker'</span>, markers{5}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.4% Xanthan Gum'</span>);
+plot(timexg5, velox5, <span class="string">'Color'</span>, colors(6,:), <span class="string">'Marker'</span>, markers{6}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.5% Xanthan Gum'</span>);
+
+set(gca,<span class="string">'FontSize'</span>,13);
+xlabel(<span class="string">'Time (s)'</span>, <span class="string">'FontSize'</span>, 14, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Velocity in Streamwise Direction(cm/s)'</span>, <span class="string">'FontSize'</span>, 14, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+<span class="comment">%grid on;</span>
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'veloxtime_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<h2 id="17">XANTHAN GUM X-DIR</h2>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+markers = {<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'d'</span>,<span class="string">'^'</span>,<span class="string">'p'</span>,<span class="string">'x'</span>};
+labels = {<span class="string">'25 L/h'</span>,<span class="string">'25 L/h'</span>,<span class="string">'25 L/h'</span>, <span class="string">'40 L/h'</span>,<span class="string">'55 L/h'</span>,<span class="string">'55 L/h'</span>};
+Q = [25; 25; 25; 40; 55; 55]; <span class="comment">%l/h</span>
+xg = [0;1;2;3;4;5];
+color_map = containers.Map({25, 40, 55}, {[0 0 1], [0 0.5 0],[1 0 0] });
+
+allvelo_avg = [mean(velox0), mean(velox1), mean(velox2), <span class="keyword">...</span>
+               nanmean(velox3), nanmean(velox4), mean(velox5)];
+allvelo_std = [std(velox0), std(velox1), std(velox2), <span class="keyword">...</span>
+               nanstd(velox3), std(velox4), std(velox5)];
+
+<span class="comment">% Plot</span>
+figure;
+errorbar(xg, allvelo_avg, allvelo_std, <span class="string">'k'</span>, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'LineWidth'</span>, 1,<span class="string">'HandleVisibility'</span>, <span class="string">'off'</span>);
+hold <span class="string">on</span>;
+<span class="keyword">for</span> i = 1:length(xg)
+    disch_color = color_map(Q(i));
+    plot(xg(i), allvelo_avg(i), markers{i}, <span class="string">'Color'</span>, disch_color, <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 10, <span class="string">'DisplayName'</span>, labels{i});
+<span class="keyword">end</span>
+
+set(gca,<span class="string">'FontSize'</span>,13);
+xlabel(<span class="string">'% Xanthan Gum'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Time and Space Averaged Velocity in X (cm/s)'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'velocityxanthanguminX_time_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<h2 id="18">y direction</h2>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+figure;
+hold <span class="string">on</span>;
+colors=orderedcolors(<span class="string">'meadow'</span>);
+markers = {<span class="string">'o'</span>, <span class="string">'s'</span>, <span class="string">'d'</span>, <span class="string">'^'</span>, <span class="string">'x'</span>, <span class="string">'*'</span>};
+plot(timexg0, veloy0, <span class="string">'Color'</span>, colors(1,:), <span class="string">'Marker'</span>, markers{1}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0% Xanthan Gum'</span>);
+plot(timexg1, veloy1, <span class="string">'Color'</span>, colors(2,:), <span class="string">'Marker'</span>, markers{2}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.1% Xanthan Gum'</span>);
+plot(timexg2, veloy2, <span class="string">'Color'</span>, colors(3,:), <span class="string">'Marker'</span>, markers{3}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.2% Xanthan Gum'</span>);
+plot(timexg3, veloy3, <span class="string">'Color'</span>, colors(4,:), <span class="string">'Marker'</span>, markers{4}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.3% Xanthan Gum'</span>);
+plot(timexg4, veloy4, <span class="string">'Color'</span>, colors(5,:), <span class="string">'Marker'</span>, markers{5}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.4% Xanthan Gum'</span>);
+plot(timexg5, veloy5, <span class="string">'Color'</span>, colors(6,:), <span class="string">'Marker'</span>, markers{6}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.5% Xanthan Gum'</span>);
+
+set(gca,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'Time (s)'</span>, <span class="string">'FontSize'</span>, 13, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Velocity in Cross-Stream Direction(cm/s)'</span>, <span class="string">'FontSize'</span>, 13, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+<span class="comment">%grid on;</span>
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'velomvelocitiesinydire_time_figure.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<h2 id="19">XANTHAN GUM Y DIR</h2>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+xg=[0;1;2;3;4;5];
+allvelo_avg=[mean(veloy0),mean(veloy1),mean(veloy2),mean(veloy3),mean(veloy4),mean(veloy5)];
+figure;
+err = 0.1 * ones(size(allvelo_avg));
+errorbar(xg, allvelo_avg, err,<span class="string">'k'</span>, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'LineWidth'</span>, 1);
+hold <span class="string">on</span>
+plot(xg(1),allvelo_avg(1),<span class="string">'ko'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0% Xanthan Gum'</span>);
+plot(xg(2),allvelo_avg(2),<span class="string">'ks'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.1% Xanthan Gum'</span>);
+plot(xg(3),allvelo_avg(3),<span class="string">'kd'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.2% Xanthan Gum'</span>);
+plot(xg(4),allvelo_avg(4),<span class="string">'k^'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.3% Xanthan Gum'</span>);
+plot(xg(5),allvelo_avg(5),<span class="string">'kp'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.4% Xanthan Gum'</span>);
+plot(xg(6),allvelo_avg(6),<span class="string">'kx'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.5% Xanthan Gum'</span>);
+set(gca,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'% Xanthan Gum'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Time and Space Averaged Velocity in Y (cm/s)'</span>, <span class="string">'FontSize'</span>, 11, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+<span class="comment">%legend('show', 'Location', 'best');</span>
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'velocityxanthanguminy_xg_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<h2 id="20">non dimensionalize y</h2>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+figure;
+hold <span class="string">on</span>;
+colors=orderedcolors(<span class="string">'meadow'</span>);
+markers = {<span class="string">'o'</span>, <span class="string">'s'</span>, <span class="string">'d'</span>, <span class="string">'^'</span>, <span class="string">'x'</span>, <span class="string">'*'</span>};
+plot(timexg0, vy0, <span class="string">'Color'</span>, colors(1,:), <span class="string">'Marker'</span>, markers{1}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0% Xanthan Gum'</span>);
+plot(timexg1, vy1, <span class="string">'Color'</span>, colors(2,:), <span class="string">'Marker'</span>, markers{2}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.1% Xanthan Gum'</span>);
+plot(timexg2, vy2, <span class="string">'Color'</span>, colors(3,:), <span class="string">'Marker'</span>, markers{3}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.2% Xanthan Gum'</span>);
+plot(timexg3, vy3, <span class="string">'Color'</span>, colors(4,:), <span class="string">'Marker'</span>, markers{4}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.3% Xanthan Gum'</span>);
+plot(timexg4, vy4, <span class="string">'Color'</span>, colors(5,:), <span class="string">'Marker'</span>, markers{5}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.4% Xanthan Gum'</span>);
+plot(timexg5, vy5, <span class="string">'Color'</span>, colors(6,:), <span class="string">'Marker'</span>, markers{6}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.5% Xanthan Gum'</span>);
+
+set(gca,<span class="string">'FontSize'</span>,13);
+xlabel(<span class="string">'Time (s)'</span>, <span class="string">'FontSize'</span>, 13, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Normalized Velocity in Cross-Stream Direction'</span>, <span class="string">'FontSize'</span>, 13, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+<span class="comment">%grid on;</span>
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'normalizevelocitytime_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+markers = {<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'d'</span>,<span class="string">'^'</span>,<span class="string">'p'</span>,<span class="string">'x'</span>};
+labels = {<span class="string">'25 L/h'</span>,<span class="string">'25 L/h'</span>,<span class="string">'25 L/h'</span>, <span class="string">'40 L/h'</span>,<span class="string">'55 L/h'</span>,<span class="string">'55 L/h'</span>};
+Q = [25; 25; 25; 40; 55; 55]; <span class="comment">%l/h</span>
+xg = [0;1;2;3;4;5];
+color_map = containers.Map({25, 40, 55}, {[0 0 1], [0 0.5 0],[1 0 0] });
+
+allvelo_avg = [mean(veloy0), mean(veloy1), mean(veloy2), <span class="keyword">...</span>
+               nanmean(veloy3), nanmean(veloy4), mean(veloy5)];
+allvelo_std = [std(veloy0), std(veloy1), std(veloy2), <span class="keyword">...</span>
+               nanstd(veloy3), std(veloy4), std(veloy5)];
+
+<span class="comment">% Plot</span>
+figure;
+errorbar(xg, allvelo_avg, allvelo_std, <span class="string">'k'</span>, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'LineWidth'</span>, 1,<span class="string">'HandleVisibility'</span>, <span class="string">'off'</span>);
+hold <span class="string">on</span>;
+<span class="keyword">for</span> i = 1:length(xg)
+    disch_color = color_map(Q(i));
+    plot(xg(i), allvelo_avg(i), markers{i}, <span class="string">'Color'</span>, disch_color, <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 10, <span class="string">'DisplayName'</span>, labels{i});
+<span class="keyword">end</span>
+
+set(gca,<span class="string">'FontSize'</span>,13);
+xlabel(<span class="string">'% Xanthan Gum'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Time and Space Averaged Velocity in Y (cm/s)'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'velocityxanthanguminY_time_figure.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB® R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clc;
+clear all;
+close all;
+%% 
+load("conversionfxg5.mat");
+%%
+load('velo_xxg05_threshmean.mat');
+load("velo_yxg05_threshmean.mat");
+%% 
+velocity_xavg(:,55:59)=[];
+velocity_yavg(:,55:59)=[];
+%% CM/S x - dir 
+velo_cm=velocity_xavg./50;
+velocitycm=velo_cm.*60;
+veloci_cm=velocitycm./length_all;
+%%
+save('velo_xcmxg05.mat','veloci_cm');
+
+%% CM/S y dir
+velo_cmy=velocity_yavg./50;
+velocitycmy=velo_cmy.*60;
+veloci_cmy=velocitycmy./length_all;
+save('velo_ycmxg05.mat','veloci_cmy');
+
+%%
+data0=load('velo_xcmxg0.mat');
+data1=load("velo_xcmxg01.mat");
+data2=load("velo_xcmxg02.mat");
+data3=load("velo_xcmxg03.mat");
+data4=load("velo_xcmxg04.mat");
+data5=load("velo_xcmxg05.mat");
+
+velox0=data0.veloci_cm;
+velox1=data1.veloci_cm;
+velox2=data2.veloci_cm;
+velox3=data3.veloci_cm;
+velox4=data4.veloci_cm;
+velox5=data5.veloci_cm;
+%% velo y 
+data6=load('velo_ycmxg0.mat');
+data7=load("velo_ycmxg01.mat");
+data8=load("velo_ycmxg02.mat");
+data9=load("velo_ycmxg03.mat");
+data10=load("velo_ycmxg04.mat");
+data11=load("velo_ycmxg05.mat");
+
+veloy0=data6.veloci_cm;
+veloy1=data7.veloci_cmy;
+veloy2=data8.veloci_cmy;
+veloy3=data9.veloci_cmy;
+veloy4=data10.veloci_cmy;
+veloy5=data11.veloci_cmy;
+
+%% time array 
+time0=load('Timexg0.mat');
+time1=load('Timexg01.mat');
+time2=load('Timexg02.mat');
+time3=load('Timexg03.mat');
+time4=load('Timexg04.mat');
+time5=load('Timexg05.mat');
+
+timexg0=time0.time_array;
+timexg1=time1.time_array;
+timexg2=time2.time_array;
+timexg3=time3.time_array;
+timexg4=time4.time_array;
+timexg5=time5.time_array;
+%% normalized time 
+times_norxg0=(timexg0-min(timexg0))/(max(timexg0)-min(timexg0));
+times_norxg1=(timexg1-min(timexg1))/(max(timexg1)-min(timexg1));
+times_norxg2=(timexg2-min(timexg2))/(max(timexg2)-min(timexg2));
+times_norxg3=(timexg3-min(timexg3))/(max(timexg3)-min(timexg3));
+times_norxg4=(timexg4-min(timexg4))/(max(timexg4)-min(timexg4));
+times_norxg5=(timexg5-min(timexg5))/(max(timexg5)-min(timexg5));
+%%
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+%% non dimensionalize particle velocity (Aaron idea) so here discharge divided by cross sectional area
+% of the notch 
+velocities=[3.4725;3.4725;3.4725;5.56;6.2645;6.2645]; %cm/s
+%non dimensionalize velocities
+v0=velox0/3.4735;
+v1=velox1/3.4735;
+v2=velox2/3.4735;
+v3=velox3/5.56;
+v4=velox4/6.2645;
+v5=velox5/6.2645;
+%% y velocitiies
+vy0=veloy0/3.4735;
+vy1=veloy1/3.4735;
+vy2=veloy2/3.4735;
+vy3=veloy3/5.56;
+vy4=veloy4/6.2645;
+vy5=veloy5/6.2645;
+%%
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+figure;
+hold on; 
+colors=orderedcolors('meadow');
+markers = {'o', 's', 'd', '^', 'x', '*'};
+plot(timexg0, v0, 'Color', colors(1,:), 'Marker', markers{1}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0% Xanthan Gum'); 
+plot(timexg1, v1, 'Color', colors(2,:), 'Marker', markers{2}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.1% Xanthan Gum'); 
+plot(timexg2, v2, 'Color', colors(3,:), 'Marker', markers{3}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.2% Xanthan Gum');
+plot(timexg3, v3, 'Color', colors(4,:), 'Marker', markers{4}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.3% Xanthan Gum');
+plot(timexg4, v4, 'Color', colors(5,:), 'Marker', markers{5}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.4% Xanthan Gum'); 
+plot(timexg5, v5, 'Color', colors(6,:), 'Marker', markers{6}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.5% Xanthan Gum');
+
+set(gca,'FontSize',13);
+xlabel('Time (s)', 'FontSize', 13, 'FontWeight', 'normal');
+ylabel('Normalized Velocity in Streamwise Direction', 'FontSize', 13, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+%grid on;
+box on;
+saveas(gcf, 'normalizeveloxtime_figurenolegend.png');
+hold off;
+
+%% 
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+figure;
+hold on; 
+colors=orderedcolors('meadow');
+markers = {'o', 's', 'd', '^', 'x', '*'};
+plot(timexg0, velox0, 'Color', colors(1,:), 'Marker', markers{1}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0% Xanthan Gum'); 
+plot(timexg1, velox1, 'Color', colors(2,:), 'Marker', markers{2}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.1% Xanthan Gum'); 
+plot(timexg2, velox2, 'Color', colors(3,:), 'Marker', markers{3}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.2% Xanthan Gum');
+plot(timexg3, velox3, 'Color', colors(4,:), 'Marker', markers{4}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.3% Xanthan Gum');
+plot(timexg4, velox4, 'Color', colors(5,:), 'Marker', markers{5}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.4% Xanthan Gum'); 
+plot(timexg5, velox5, 'Color', colors(6,:), 'Marker', markers{6}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.5% Xanthan Gum');
+
+set(gca,'FontSize',13);
+xlabel('Time (s)', 'FontSize', 14, 'FontWeight', 'normal');
+ylabel('Velocity in Streamwise Direction(cm/s)', 'FontSize', 14, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+%grid on;
+box on;
+saveas(gcf, 'veloxtime_figurenolegend.png');
+hold off;
+%% XANTHAN GUM X-DIR 
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+markers = {'o','s','d','^','p','x'};
+labels = {'25 L/h','25 L/h','25 L/h', '40 L/h','55 L/h','55 L/h'};
+Q = [25; 25; 25; 40; 55; 55]; %l/h
+xg = [0;1;2;3;4;5];
+color_map = containers.Map({25, 40, 55}, {[0 0 1], [0 0.5 0],[1 0 0] });
+
+allvelo_avg = [mean(velox0), mean(velox1), mean(velox2), ...
+               nanmean(velox3), nanmean(velox4), mean(velox5)];
+allvelo_std = [std(velox0), std(velox1), std(velox2), ...
+               nanstd(velox3), std(velox4), std(velox5)];
+
+% Plot
+figure;
+errorbar(xg, allvelo_avg, allvelo_std, 'k', 'LineStyle', 'none', 'LineWidth', 1,'HandleVisibility', 'off');
+hold on;
+for i = 1:length(xg)
+    disch_color = color_map(Q(i));
+    plot(xg(i), allvelo_avg(i), markers{i}, 'Color', disch_color, 'LineWidth', 1, 'MarkerSize', 10, 'DisplayName', labels{i});
+end
+
+set(gca,'FontSize',13);
+xlabel('% Xanthan Gum', 'FontSize', 12, 'FontWeight', 'normal');
+ylabel('Time and Space Averaged Velocity in X (cm/s)', 'FontSize', 12, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'velocityxanthanguminX_time_figurenolegend.png');
+hold off;
+
+
+%% y direction
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+figure;
+hold on; 
+colors=orderedcolors('meadow');
+markers = {'o', 's', 'd', '^', 'x', '*'};
+plot(timexg0, veloy0, 'Color', colors(1,:), 'Marker', markers{1}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0% Xanthan Gum'); 
+plot(timexg1, veloy1, 'Color', colors(2,:), 'Marker', markers{2}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.1% Xanthan Gum'); 
+plot(timexg2, veloy2, 'Color', colors(3,:), 'Marker', markers{3}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.2% Xanthan Gum');
+plot(timexg3, veloy3, 'Color', colors(4,:), 'Marker', markers{4}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.3% Xanthan Gum');
+plot(timexg4, veloy4, 'Color', colors(5,:), 'Marker', markers{5}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.4% Xanthan Gum'); 
+plot(timexg5, veloy5, 'Color', colors(6,:), 'Marker', markers{6}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.5% Xanthan Gum');
+
+set(gca,'FontSize',12);
+xlabel('Time (s)', 'FontSize', 13, 'FontWeight', 'normal');
+ylabel('Velocity in Cross-Stream Direction(cm/s)', 'FontSize', 13, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+%grid on;
+box on;
+saveas(gcf, 'velomvelocitiesinydire_time_figure.png');
+hold off;
+%% XANTHAN GUM Y DIR
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+xg=[0;1;2;3;4;5];
+allvelo_avg=[mean(veloy0),mean(veloy1),mean(veloy2),mean(veloy3),mean(veloy4),mean(veloy5)];
+figure;
+err = 0.1 * ones(size(allvelo_avg));
+errorbar(xg, allvelo_avg, err,'k', 'LineStyle', 'none', 'LineWidth', 1);
+hold on
+plot(xg(1),allvelo_avg(1),'ko','LineWidth',1,'MarkerSize',6,'DisplayName','0% Xanthan Gum');
+plot(xg(2),allvelo_avg(2),'ks','LineWidth',1,'MarkerSize',6,'DisplayName','0.1% Xanthan Gum');
+plot(xg(3),allvelo_avg(3),'kd','LineWidth',1,'MarkerSize',6,'DisplayName','0.2% Xanthan Gum');
+plot(xg(4),allvelo_avg(4),'k^','LineWidth',1,'MarkerSize',6,'DisplayName','0.3% Xanthan Gum');
+plot(xg(5),allvelo_avg(5),'kp','LineWidth',1,'MarkerSize',6,'DisplayName','0.4% Xanthan Gum');
+plot(xg(6),allvelo_avg(6),'kx','LineWidth',1,'MarkerSize',6,'DisplayName','0.5% Xanthan Gum');
+set(gca,'FontSize',12);
+xlabel('% Xanthan Gum', 'FontSize', 12, 'FontWeight', 'normal');
+ylabel('Time and Space Averaged Velocity in Y (cm/s)', 'FontSize', 11, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+%legend('show', 'Location', 'best');
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'velocityxanthanguminy_xg_figurenolegend.png');
+hold off;
+%% non dimensionalize y 
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+figure;
+hold on; 
+colors=orderedcolors('meadow');
+markers = {'o', 's', 'd', '^', 'x', '*'};
+plot(timexg0, vy0, 'Color', colors(1,:), 'Marker', markers{1}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0% Xanthan Gum'); 
+plot(timexg1, vy1, 'Color', colors(2,:), 'Marker', markers{2}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.1% Xanthan Gum'); 
+plot(timexg2, vy2, 'Color', colors(3,:), 'Marker', markers{3}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.2% Xanthan Gum');
+plot(timexg3, vy3, 'Color', colors(4,:), 'Marker', markers{4}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.3% Xanthan Gum');
+plot(timexg4, vy4, 'Color', colors(5,:), 'Marker', markers{5}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.4% Xanthan Gum'); 
+plot(timexg5, vy5, 'Color', colors(6,:), 'Marker', markers{6}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.5% Xanthan Gum');
+
+set(gca,'FontSize',13);
+xlabel('Time (s)', 'FontSize', 13, 'FontWeight', 'normal');
+ylabel('Normalized Velocity in Cross-Stream Direction', 'FontSize', 13, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+%grid on;
+box on;
+saveas(gcf, 'normalizevelocitytime_figurenolegend.png');
+hold off;
+%%
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+markers = {'o','s','d','^','p','x'};
+labels = {'25 L/h','25 L/h','25 L/h', '40 L/h','55 L/h','55 L/h'};
+Q = [25; 25; 25; 40; 55; 55]; %l/h
+xg = [0;1;2;3;4;5];
+color_map = containers.Map({25, 40, 55}, {[0 0 1], [0 0.5 0],[1 0 0] });
+
+allvelo_avg = [mean(veloy0), mean(veloy1), mean(veloy2), ...
+               nanmean(veloy3), nanmean(veloy4), mean(veloy5)];
+allvelo_std = [std(veloy0), std(veloy1), std(veloy2), ...
+               nanstd(veloy3), std(veloy4), std(veloy5)];
+
+% Plot
+figure;
+errorbar(xg, allvelo_avg, allvelo_std, 'k', 'LineStyle', 'none', 'LineWidth', 1,'HandleVisibility', 'off');
+hold on;
+for i = 1:length(xg)
+    disch_color = color_map(Q(i));
+    plot(xg(i), allvelo_avg(i), markers{i}, 'Color', disch_color, 'LineWidth', 1, 'MarkerSize', 10, 'DisplayName', labels{i});
+end
+
+set(gca,'FontSize',13);
+xlabel('% Xanthan Gum', 'FontSize', 12, 'FontWeight', 'normal');
+ylabel('Time and Space Averaged Velocity in Y (cm/s)', 'FontSize', 12, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'velocityxanthanguminY_time_figure.png');
+hold off;
+
+
+##### SOURCE END #####
+-->
+
+
+</body></html>
