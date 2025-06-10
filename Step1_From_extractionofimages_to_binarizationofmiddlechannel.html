@@ -1,0 +1,421 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Step1_From_extractionofimages_to_binarizationofmiddlechannel</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-06-10">
+<meta name="DC.source" content="Step1_From_extractionofimages_to_binarizationofmiddlechannel.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">extract images from videos</a>
+</li>
+<li>
+<a href="#3">reduce image number for processing</a>
+</li>
+<li>
+<a href="#4">load piv : from here all the sess.mat files were processed individually: For instance sess3.mat was uploaded and binarized</a>
+</li>
+<li>
+<a href="#5">velocity of grains</a>
+</li>
+<li>
+<a href="#6">Magnitude</a>
+</li>
+<li>
+<a href="#8">ffilter based on velocity mag</a>
+</li>
+<li>
+<a href="#11">Morpho</a>
+</li>
+<li>
+<a href="#12">code to remove unconnected dots if any</a>
+</li>
+<li>
+<a href="#18">sving the binary images</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">clc;
+close <span class="string">all</span>;
+clear <span class="string">all</span>;
+</pre>
+<h2 id="2">extract images from videos</h2>
+<pre class="codeinput">cd(<span class="string">'/data2/nacere/Processing/XG05/Time4/Time4_data/'</span>);
+a=VideoReader(<span class="string">'mig_slp001_lrgcha_outwalnot_gentle_insi_1layergravel_exp4_inlet_20230818_.mov'</span>);
+<span class="keyword">for</span> img=1:a.numFrames
+    filename=strcat(<span class="string">'frame'</span>, num2str(img),<span class="string">'.png'</span>);
+    b=read(a,img);
+    imwrite(b,filename);
+
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput error">Error using cd
+Unable to change current folder to '/data2/nacere/Processing/XG05/Time4/Time4_data' (Name is nonexistent or not a folder).
+
+Error in Step1_From_extractionofimages_to_binarizationofmiddlechannel (line 5)
+cd('/data2/nacere/Processing/XG05/Time4/Time4_data/');
+</pre>
+<h2 id="3">reduce image number for processing</h2>
+<p>select every 10th images for lowest xanthan gum videos (0 to 0.3%) select every 50th images for highest xanthan gum videos (0.4to 0.5%)</p>
+<pre class="codeinput">folder=<span class="string">'/data2/nacere/Processing/XG04/Time5/Time5_data/'</span>;
+<span class="comment">%folder = '/data1/Nacere/imageprocess/ImagesXG03/Videos/';</span>
+newfolder = <span class="string">'/data2/nacere/Processing/XG04/Time5/Time5_every50th/'</span>;
+
+<span class="keyword">if</span> ~exist(newfolder, <span class="string">'dir'</span>)
+    mkdir(newfolder);
+<span class="keyword">end</span>
+files = natsortfiles(dir(fullfile(folder, <span class="string">'*.png'</span>)));
+<span class="comment">% files = sort({files1.name});</span>
+disp([<span class="string">'Total files found: '</span>, num2str(length(files))]);
+<span class="keyword">for</span> i = 1:50:length(files)
+    sourcefile = fullfile(files(i).folder, files(i).name);
+    <span class="comment">% sourcefile = sort({files.name});</span>
+    destfile = fullfile(newfolder, files(i).name);
+    disp([<span class="string">'Copying: '</span>, sourcefile, <span class="string">' to '</span>, destfile]);
+    copyfile(sourcefile, destfile);
+    disp(<span class="string">'Copy operation completed.'</span>);
+<span class="keyword">end</span>
+</pre>
+<h2 id="4">load piv : from here all the sess.mat files were processed individually: For instance sess3.mat was uploaded and binarized</h2>
+<pre class="codeinput"><span class="comment">%then further processing were done to remove unwanted dots and keep the</span>
+<span class="comment">%middle channel</span>
+load <span class="string">sess3.mat</span>;
+</pre>
+<h2 id="5">velocity of grains</h2>
+<pre class="codeinput">Velocity_x=u_original{1};
+Velocity_y=v_original{1};
+</pre>
+<h2 id="6">Magnitude</h2>
+<pre class="codeinput">velo_mag=sqrt(Velocity_x.^2+Velocity_y.^2);
+threshold =0.3;
+</pre>
+<pre class="codeinput">ks=find(velo_mag &lt;0.5);
+kh=find(velo_mag &gt;= 0.5);
+Binar=zeros(size(velo_mag));
+Binar(ks)=0;
+Binar(kh)=1;
+
+X=x{1};
+Y=y{1};
+figure;
+quiver(X,Y,Velocity_x,Velocity_y,10)
+figure;
+contourf(X,Y,(velo_mag));
+</pre>
+<h2 id="8">ffilter based on velocity mag</h2>
+<pre class="codeinput">threshold=0.3;
+above_threshold=velo_mag&gt;=threshold;
+binary_mask=double(above_threshold);
+X=x{1};
+Y=y{1};
+<span class="comment">% plot</span>
+figure;
+quiver(X(above_threshold),Y(above_threshold), Velocity_x(above_threshold), Velocity_y(above_threshold), 1);
+figure;
+contourf(X,Y, binary_mask, 1);
+colormap([1 1 1; 0 0 0]);
+</pre>
+<pre class="codeinput">bin_velomag=imbinarize(velo_mag,threshold);
+figure;imshow(bin_velomag);
+</pre>
+<pre class="codeinput">conn=conndef(2,<span class="string">'minimal'</span>);
+erode= imerode(bin_velomag,strel(<span class="string">'disk'</span>, 1));
+cl=imclose(bin_velomag, strel(<span class="string">'disk'</span>,1)); <span class="comment">%% to close gasp between pixel very important</span>
+windowSize = 2;
+kernel = ones(windowSize) / windowSize^ 2;
+blurryImage = convn(single(cl), kernel, <span class="string">'same'</span>);
+binaryImage = blurryImage &gt; 0.1; <span class="comment">% Rethreshold</span>
+figure; imshow(binaryImage);
+</pre>
+<h2 id="11">Morpho</h2>
+<pre class="codeinput">bmorph=bwmorph(cl,<span class="string">'close'</span>);
+figure; imshow(bmorph);
+</pre>
+<h2 id="12">code to remove unconnected dots if any</h2>
+<pre class="codeinput">numberToExtract = 2;
+biggestBlob = ExtractNLargestBlobs(bmorph, numberToExtract);
+subplot(2, 2, 4);
+figure;
+imshow(biggestBlob, []);
+<span class="comment">% Make the number positive again.  We don't need it negative for smallest extraction anymore.</span>
+numberToExtract = abs(numberToExtract);
+</pre>
+<pre class="codeinput"><span class="comment">% Function to return the specified number of largest or smallest blobs in a binary image.</span>
+<span class="comment">% If numberToExtract &gt; 0 it returns the numberToExtract largest blobs.</span>
+<span class="comment">% If numberToExtract &lt; 0 it returns the numberToExtract smallest blobs.</span>
+<span class="comment">% Example: return a binary image with only the largest blob:</span>
+<span class="comment">%   binaryImage = ExtractNLargestBlobs(binaryImage, 1)</span>
+<span class="comment">% Example: return a binary image with the 3 smallest blobs:</span>
+<span class="comment">%   binaryImage = ExtractNLargestBlobs(binaryImage, -3)</span>
+<span class="keyword">try</span>
+	<span class="comment">% Get all the blob properties.  Can only pass in originalImage in version R2008a and later.</span>
+	[labeledImage, numberOfBlobs] = bwlabel(bmorph);
+	blobMeasurements = regionprops(labeledImage, <span class="string">'area'</span>);
+    numberToExtract=1;
+	<span class="comment">% Get all the areas</span>
+	allAreas = [blobMeasurements.Area];
+	<span class="keyword">if</span> numberToExtract &gt; 0
+		<span class="comment">% For positive numbers, sort in order of largest to smallest.</span>
+		<span class="comment">% Sort them.</span>
+		[sortedAreas, sortIndexes] = sort(allAreas, <span class="string">'descend'</span>);
+	<span class="keyword">elseif</span> numberToExtract &lt; 0
+		<span class="comment">% For negative numbers, sort in order of smallest to largest.</span>
+		<span class="comment">% Sort them.</span>
+		[sortedAreas, sortIndexes] = sort(allAreas, <span class="string">'ascend'</span>);
+		<span class="comment">% Need to negate numberToExtract so we can use it in sortIndexes later.</span>
+		numberToExtract = -numberToExtract;
+	<span class="keyword">else</span>
+</pre>
+<pre class="codeinput">		<span class="comment">% numberToExtract = 0.  Shouldn't happen.  Return no blobs.</span>
+</pre>
+<p>
+<img vspace="5" hspace="5" src="FILENAME.PNG" alt=""> </p>
+<pre class="codeinput">		bmorph1 = false(size(bmorph1));
+		<span class="keyword">return</span>;
+</pre>
+<pre class="codeinput">	<span class="keyword">end</span>
+	<span class="comment">% Extract the "numberToExtract" largest blob(a)s using ismember().</span>
+	biggestchannel = ismember(labeledImage, sortIndexes(1:numberToExtract));
+	<span class="comment">% Convert from integer labeled image into binary (logical) image.</span>
+	bmorph1 = biggestchannel &gt; 0;
+<span class="keyword">catch</span> ME
+	errorMessage = sprintf(<span class="string">'Error in function ExtractNLargestBlobs().\n\nError Message:\n%s'</span>, ME.message);
+	fprintf(1, <span class="string">'%s\n'</span>, errorMessage);
+	uiwait(warndlg(errorMessage));
+<span class="keyword">end</span>
+</pre>
+<pre class="codeinput">figure; imshow(biggestchannel);
+</pre>
+<h2 id="18">sving the binary images</h2>
+<pre class="codeinput">imwrite(biggestchannel,<span class="string">'binary3.png'</span>);
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB® R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clc;
+close all;
+clear all;
+%% extract images from videos
+cd('/data2/nacere/Processing/XG05/Time4/Time4_data/');
+a=VideoReader('mig_slp001_lrgcha_outwalnot_gentle_insi_1layergravel_exp4_inlet_20230818_.mov');
+for img=1:a.numFrames
+    filename=strcat('frame', num2str(img),'.png');
+    b=read(a,img); 
+    imwrite(b,filename);
+ 
+end
+%% reduce image number for processing 
+% select every 10th images for lowest xanthan gum videos (0 to 0.3%)
+% select every 50th images for highest xanthan gum videos (0.4to 0.5%)
+folder='/data2/nacere/Processing/XG04/Time5/Time5_data/';
+%folder = '/data1/Nacere/imageprocess/ImagesXG03/Videos/'; 
+newfolder = '/data2/nacere/Processing/XG04/Time5/Time5_every50th/'; 
+ 
+if ~exist(newfolder, 'dir')                
+    mkdir(newfolder); 
+end 
+files = natsortfiles(dir(fullfile(folder, '*.png'))); 
+% files = sort({files1.name});
+disp(['Total files found: ', num2str(length(files))]); 
+for i = 1:50:length(files)
+    sourcefile = fullfile(files(i).folder, files(i).name); 
+    % sourcefile = sort({files.name}); 
+    destfile = fullfile(newfolder, files(i).name); 
+    disp(['Copying: ', sourcefile, ' to ', destfile]); 
+    copyfile(sourcefile, destfile);
+    disp('Copy operation completed.');
+end
+%% load piv : from here all the sess.mat files were processed individually: For instance sess3.mat was uploaded and binarized
+%then further processing were done to remove unwanted dots and keep the
+%middle channel
+load sess3.mat;
+%%  velocity of grains 
+Velocity_x=u_original{1};
+Velocity_y=v_original{1};
+%% Magnitude 
+velo_mag=sqrt(Velocity_x.^2+Velocity_y.^2);
+threshold =0.3;
+%% 
+
+ks=find(velo_mag <0.5);
+kh=find(velo_mag >= 0.5);
+Binar=zeros(size(velo_mag));
+Binar(ks)=0;
+Binar(kh)=1;
+
+X=x{1};
+Y=y{1};
+figure;
+quiver(X,Y,Velocity_x,Velocity_y,10)
+figure;
+contourf(X,Y,(velo_mag));
+
+%% ffilter based on velocity mag
+threshold=0.3;
+above_threshold=velo_mag>=threshold;
+binary_mask=double(above_threshold);
+X=x{1};
+Y=y{1}; 
+% plot 
+figure;
+quiver(X(above_threshold),Y(above_threshold), Velocity_x(above_threshold), Velocity_y(above_threshold), 1);
+figure;
+contourf(X,Y, binary_mask, 1);
+colormap([1 1 1; 0 0 0]);
+
+
+%%
+bin_velomag=imbinarize(velo_mag,threshold);
+figure;imshow(bin_velomag);
+%%
+conn=conndef(2,'minimal');
+erode= imerode(bin_velomag,strel('disk', 1));
+cl=imclose(bin_velomag, strel('disk',1)); %% to close gasp between pixel very important 
+windowSize = 2;
+kernel = ones(windowSize) / windowSize^ 2;
+blurryImage = convn(single(cl), kernel, 'same');
+binaryImage = blurryImage > 0.1; % Rethreshold
+figure; imshow(binaryImage);
+%% Morpho
+bmorph=bwmorph(cl,'close');
+figure; imshow(bmorph);
+%% code to remove unconnected dots if any
+numberToExtract = 2;
+biggestBlob = ExtractNLargestBlobs(bmorph, numberToExtract);
+subplot(2, 2, 4);
+figure;
+imshow(biggestBlob, []);
+% Make the number positive again.  We don't need it negative for smallest extraction anymore.
+numberToExtract = abs(numberToExtract);
+
+
+%%
+
+% Function to return the specified number of largest or smallest blobs in a binary image.
+% If numberToExtract > 0 it returns the numberToExtract largest blobs.
+% If numberToExtract < 0 it returns the numberToExtract smallest blobs.
+% Example: return a binary image with only the largest blob:
+%   binaryImage = ExtractNLargestBlobs(binaryImage, 1)
+% Example: return a binary image with the 3 smallest blobs:
+%   binaryImage = ExtractNLargestBlobs(binaryImage, -3)
+try
+	% Get all the blob properties.  Can only pass in originalImage in version R2008a and later.
+	[labeledImage, numberOfBlobs] = bwlabel(bmorph);
+	blobMeasurements = regionprops(labeledImage, 'area');
+    numberToExtract=1;
+	% Get all the areas
+	allAreas = [blobMeasurements.Area];
+	if numberToExtract > 0
+		% For positive numbers, sort in order of largest to smallest.
+		% Sort them.
+		[sortedAreas, sortIndexes] = sort(allAreas, 'descend');
+	elseif numberToExtract < 0
+		% For negative numbers, sort in order of smallest to largest.
+		% Sort them.
+		[sortedAreas, sortIndexes] = sort(allAreas, 'ascend');
+		% Need to negate numberToExtract so we can use it in sortIndexes later.
+		numberToExtract = -numberToExtract;
+	else
+		% numberToExtract = 0.  Shouldn't happen.  Return no blobs.
+        %%
+        % 
+        % <<FILENAME.PNG>>
+        % 
+		bmorph1 = false(size(bmorph1));
+		return;
+	end
+	% Extract the "numberToExtract" largest blob(a)s using ismember().
+	biggestchannel = ismember(labeledImage, sortIndexes(1:numberToExtract));
+	% Convert from integer labeled image into binary (logical) image.
+	bmorph1 = biggestchannel > 0;
+catch ME
+	errorMessage = sprintf('Error in function ExtractNLargestBlobs().\n\nError Message:\n%s', ME.message);
+	fprintf(1, '%s\n', errorMessage);
+	uiwait(warndlg(errorMessage));
+end
+%% 
+figure; imshow(biggestchannel);
+%% sving the binary images 
+imwrite(biggestchannel,'binary3.png');
+
+##### SOURCE END #####
+-->
+
+
+</body></html>
