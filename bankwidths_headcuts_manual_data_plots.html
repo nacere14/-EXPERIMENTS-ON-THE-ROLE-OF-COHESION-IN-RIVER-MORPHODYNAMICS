@@ -1,0 +1,553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>nas_experiment_manual_data_plots</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-06-10">
+<meta name="DC.source" content="nas_experiment_manual_data_plots.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">import data</a>
+</li>
+<li>
+<a href="#3">Width calculations</a>
+</li>
+<li>
+<a href="#4">plot time and space averaged width vs. %XG (did not run this part)</a>
+</li>
+<li>
+<a href="#5">headcut calculations (for 0.2-0.5%XG)</a>
+</li>
+<li>
+<a href="#6">supplementary width plots with stdev error bars</a>
+</li>
+<li>
+<a href="#7">plot time and space averaged width vs. %XG</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">
+<span class="comment">%%script to plot data from hand measurements of cohesive flume experiments</span>
+clear <span class="string">all</span>
+close <span class="string">all</span>
+</pre>
+<h2 id="2">import data</h2>
+<pre class="codeinput">
+<span class="comment">%each dataset columns go as: 0time, 0width/headcut, 1time, 1 width/headcut,</span>
+<span class="comment">%etc.</span>
+width = importdata(<span class="string">'cohesion_width_data_avg_hand_measured.csv'</span>);
+headcut = importdata(<span class="string">'cohesion_headcut_hand_measured.csv'</span>);
+
+<span class="comment">%make array for looping through time</span>
+cols = 1:4:24;
+</pre>
+<h2 id="3">Width calculations</h2>
+<pre class="codeinput">
+<span class="comment">%make plot of average width through time</span>
+<span class="comment">%make array for looping through time</span>
+
+markerStyles = {<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'d'</span>,<span class="string">'^'</span>,<span class="string">'p'</span>,<span class="string">'x'</span>,<span class="string">'v'</span>,<span class="string">'x'</span>};
+colors = orderedcolors(<span class="string">'meadow'</span>);
+figure;
+
+<span class="keyword">for</span> j = 1:length(cols)
+    i = cols(j);
+
+    time_measurements = width.data(:, i);
+    width_measurements = width.data(:, i + 1);
+
+    good_indices = find(time_measurements &gt; -1);
+    time_measurements = time_measurements(good_indices);
+    width_measurements = width_measurements(good_indices);
+
+    hold <span class="string">on</span>;
+    plot(time_measurements, width_measurements,<span class="string">'Color'</span>, colors(j, :), <span class="string">'Marker'</span>, markerStyles{j},<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>, 6,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>);
+<span class="keyword">end</span>
+hold <span class="string">off</span>;
+set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+legend(<span class="string">'0%X.G.'</span>,<span class="string">'0.1%X.G.'</span>,<span class="string">'0.2%X.G.'</span>,<span class="string">'0.3%X.G.'</span>,<span class="string">'0.4%X.G.'</span>,<span class="string">'0.5%X.G.'</span>);
+xlabel(<span class="string">'Time [minutes]'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+ylabel(<span class="string">'Spatially averaged channel bank width [cm]'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+set(gca,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'bankwidths_time_figure.png'</span>);
+</pre>
+<img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_01.png" alt=""> <h2 id="4">plot time and space averaged width vs. %XG (did not run this part)</h2>
+<pre class="codeinput">figure
+xg = [0,0.1,0.2,0.3,0.4,0.5];
+avg_width_0 = nanmean(width.data(:,2));
+avg_width_1 = nanmean(width.data(:,6));
+avg_width_2 = nanmean(width.data(:,10));
+avg_width_3 = nanmean(width.data(:,14));
+avg_width_4 = nanmean(width.data(:,18));
+avg_width_5 = nanmean(width.data(:,22));
+
+avg_widths = [avg_width_0,avg_width_1,avg_width_2,avg_width_3,avg_width_4,avg_width_5];
+
+plot(xg,avg_widths,<span class="string">'.'</span>,MarkerSize=20)
+xlabel(<span class="string">'%XG'</span>)
+ylabel(<span class="string">'Space and time averaged width'</span>)
+
+
+<span class="comment">%make array for looping through time</span>
+cols = 1:2:11;
+</pre>
+<img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_02.png" alt=""> <h2 id="5">headcut calculations (for 0.2-0.5%XG)</h2>
+<pre class="codeinput">cols = 1:2:7;
+markerStyles = {<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'d'</span>,<span class="string">'^'</span>,<span class="string">'p'</span>,<span class="string">'x'</span>,<span class="string">'v'</span>,<span class="string">'x'</span>};
+colors = orderedcolors(<span class="string">'meadow'</span>);
+figure;
+
+<span class="keyword">for</span> j = 1:length(cols)
+    i = cols(j);
+
+
+    <span class="comment">%pull data for each %XG in loop</span>
+    <span class="comment">%find non-nan data</span>
+    good_indices=find(headcut.data(:,i)&gt;-1);
+
+    time_measurements = headcut.data(:,i);
+    headcut_measurements = headcut.data(:,i+1);
+
+    headcut_measurements = headcut_measurements(good_indices);
+    time_measurements = time_measurements(good_indices);
+
+
+    <span class="comment">%attempt fitting powerlaw</span>
+    <span class="comment">% logtime = log(time_measurements);</span>
+    <span class="comment">% log_headcut = log(headcut_measurements);</span>
+    <span class="comment">% curve_fit = fit(time_measurements, headcut_measurements, 'exp1');</span>
+
+    <span class="comment">%plot width through time</span>
+    hold <span class="string">on</span>;
+    plot(time_measurements, headcut_measurements,<span class="string">'Color'</span>, colors(j, :), <span class="string">'Marker'</span>, markerStyles{j},<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>, 6,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>);
+<span class="keyword">end</span>
+hold <span class="string">off</span>;
+set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+legend(<span class="string">'0.2%X.G.'</span>,<span class="string">'0.3%X.G.'</span>,<span class="string">'0.4%X.G.'</span>,<span class="string">'0.5%X.G.'</span>);
+xlabel(<span class="string">'Time [minutes]'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+ylabel(<span class="string">'Headcut Location [cm upstream from outlet]'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+set(gca,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'headcut_time_figure.png'</span>);
+</pre>
+<img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_03.png" alt=""> <h2 id="6">supplementary width plots with stdev error bars</h2>
+<pre class="codeinput">
+<span class="comment">%make plot of average width through time</span>
+figure;
+cols = 1:4:24;
+
+markerStyles = {<span class="string">'o'</span>,<span class="string">'s'</span>,<span class="string">'d'</span>,<span class="string">'^'</span>,<span class="string">'p'</span>,<span class="string">'x'</span>,<span class="string">'v'</span>,<span class="string">'x'</span>};
+colors = orderedcolors(<span class="string">'meadow'</span>);
+figure;
+
+<span class="keyword">for</span> j = 1:length(cols)
+    i = cols(j);
+
+    <span class="comment">%pull data for each %XG in loop</span>
+    time_measurements = width.data(:,i);
+    width_measurements = width.data(:,i+1);
+    stdev= width.data(:,i+2);
+    sem= width.data(:,i+3);
+
+    <span class="comment">%find non-nan data</span>
+    good_indices=find(width.data(:,i)&gt;-1);
+
+    width_measurements = width_measurements(good_indices);
+    time_measurements = time_measurements(good_indices);
+    stdev = stdev(good_indices);
+    sem = sem(good_indices);
+
+
+    <span class="comment">%plot width through time with stdev</span>
+    errorbar(time_measurements,width_measurements,stdev,<span class="string">'Color'</span>, colors(j, :), <span class="string">'Marker'</span>, markerStyles{j},<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>, 6,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>);
+    hold <span class="string">on</span>
+<span class="keyword">end</span>
+hold <span class="string">off</span>;
+set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+legend(<span class="string">'0%X.G.'</span>,<span class="string">'0.1%X.G.'</span>,<span class="string">'0.2%X.G.'</span>,<span class="string">'0.3%X.G.'</span>,<span class="string">'0.4%X.G.'</span>,<span class="string">'0.5%X.G.'</span>);
+xlabel(<span class="string">'Time [minutes]'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+ylabel(<span class="string">'Spatially averaged channel bank width [cm]'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+set(gca,<span class="string">'FontSize'</span>,12);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+<span class="comment">%title('Errorbars show standard deviation');</span>
+saveas(gcf, <span class="string">'bankwidths_time_errorbar_figure.png'</span>);
+</pre>
+<img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_04.png" alt=""> <img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_05.png" alt=""> <h2 id="7">plot time and space averaged width vs. %XG</h2>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+markerStyles={<span class="string">'ko'</span>,<span class="string">'ks'</span>,<span class="string">'kd'</span>,<span class="string">'k^'</span>,<span class="string">'kp'</span>,<span class="string">'kx'</span>,<span class="string">'k+'</span>,<span class="string">'kv'</span>,<span class="string">'k&gt;'</span>,<span class="string">'k&lt;'</span>};
+figure;
+xg = [0,0.1,0.2,0.3,0.4,0.5];
+avg_width_0 = nanmean(width.data(:,2));
+stdev_0 = 2.994286481;
+sem_0 = 0.308837069;
+avg_width_1 = nanmean(width.data(:,6));
+stdev_1 =2.950285021;
+sem_1 =0.22366053;
+avg_width_2 = nanmean(width.data(:,10));
+stdev_2 =0.74996184;
+sem_2=0.058208328;
+avg_width_3 = nanmean(width.data(:,14));
+stdev_3=0.539097613;
+sem_3=0.041716626;
+avg_width_4 = nanmean(width.data(:,18));
+stdev_4=0.826405024;
+sem_4 =0.078794627;
+avg_width_5 = nanmean(width.data(:,22));
+stdev_5=0.212743368;
+sem_5=0.023493575;
+
+
+
+avg_widths = [avg_width_0,avg_width_1,avg_width_2,avg_width_3,avg_width_4,avg_width_5];
+stdevs = [stdev_0,stdev_1,stdev_3,stdev_3,stdev_4,stdev_5];
+sems = [sem_0,sem_1,sem_2,sem_3,sem_4,sem_5];
+
+figure;
+errorbar(xg,avg_widths,stdevs,<span class="string">'k'</span>, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'LineWidth'</span>, 1,<span class="string">'HandleVisibility'</span>, <span class="string">'off'</span>);
+hold <span class="string">on</span>;
+plot(xg(1),avg_width_0,<span class="string">'ko'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0% XG'</span>);
+plot(xg(2),avg_width_1,<span class="string">'ks'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.1% XG'</span>);
+plot(xg(3),avg_width_2,<span class="string">'kd'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.2% XG'</span>);
+plot(xg(4),avg_width_3,<span class="string">'k^'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.3% XG'</span>);
+plot(xg(5),avg_width_4,<span class="string">'kp'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.4% XG'</span>);
+plot(xg(6),avg_width_5,<span class="string">'kx'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.5% XG'</span>);
+hold <span class="string">off</span>;
+set(gca,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'%XG'</span>);
+ylabel(<span class="string">'Space and Time Averaged Width (cm)'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+<span class="comment">%title('Errorbars show standard deviation','FontSize',12,'FontWeight','normal');</span>
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'bankwidths_time_stdv_figure.png'</span>);
+</pre>
+<img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_06.png" alt=""> <img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_07.png" alt=""> <pre class="codeinput">figure;
+errorbar(xg,avg_widths,sems,<span class="string">'k'</span>, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'LineWidth'</span>, 1,<span class="string">'HandleVisibility'</span>, <span class="string">'off'</span>);
+hold <span class="string">on</span>;
+plot(xg(1),avg_width_0,<span class="string">'ko'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0% XG'</span>);
+plot(xg(2),avg_width_1,<span class="string">'ks'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.1% XG'</span>);
+plot(xg(3),avg_width_2,<span class="string">'kd'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.2% XG'</span>);
+plot(xg(4),avg_width_3,<span class="string">'k^'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.3% XG'</span>);
+plot(xg(5),avg_width_4,<span class="string">'kp'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.4% XG'</span>);
+plot(xg(6),avg_width_5,<span class="string">'kx'</span>,<span class="string">'LineWidth'</span>,1.2,<span class="string">'LineStyle'</span>,<span class="string">'none'</span>,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.5% XG'</span>);
+hold <span class="string">off</span>;
+set(gca,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'%XG'</span>);
+ylabel(<span class="string">'Space and Time Averaged Width (cm)'</span>,<span class="string">'FontSize'</span>,12,<span class="string">'FontWeight'</span>,<span class="string">'normal'</span>);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+<span class="comment">%title('Errorbars show standard error of mean');</span>
+saveas(gcf, <span class="string">'bankwidths_time_sem_figure.png'</span>);
+</pre>
+<img vspace="5" hspace="5" src="nas_experiment_manual_data_plots_08.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%%script to plot data from hand measurements of cohesive flume experiments 
+clear all
+close all
+%% import data
+%each dataset columns go as: 0time, 0width/headcut, 1time, 1 width/headcut,
+%etc. 
+width = importdata('cohesion_width_data_avg_hand_measured.csv');
+headcut = importdata('cohesion_headcut_hand_measured.csv');
+
+%make array for looping through time
+cols = 1:4:24;
+
+%% Width calculations
+
+%make plot of average width through time
+%make array for looping through time
+
+markerStyles = {'o','s','d','^','p','x','v','x'};
+colors = orderedcolors('meadow');  
+figure;
+
+for j = 1:length(cols)
+    i = cols(j);
+
+    time_measurements = width.data(:, i);
+    width_measurements = width.data(:, i + 1);
+
+    good_indices = find(time_measurements > -1);
+    time_measurements = time_measurements(good_indices);
+    width_measurements = width_measurements(good_indices);
+
+    hold on;
+    plot(time_measurements, width_measurements,'Color', colors(j, :), 'Marker', markerStyles{j},'LineWidth',1,'MarkerSize', 6,'LineStyle','none');
+end
+hold off;
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+legend('0%X.G.','0.1%X.G.','0.2%X.G.','0.3%X.G.','0.4%X.G.','0.5%X.G.');
+xlabel('Time [minutes]','FontSize',12,'FontWeight','normal');
+ylabel('Spatially averaged channel bank width [cm]','FontSize',12,'FontWeight','normal');
+set(gca,'FontSize',12);
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'bankwidths_time_figure.png');
+
+%% plot time and space averaged width vs. %XG (did not run this part) 
+figure
+xg = [0,0.1,0.2,0.3,0.4,0.5];
+avg_width_0 = nanmean(width.data(:,2));
+avg_width_1 = nanmean(width.data(:,6));
+avg_width_2 = nanmean(width.data(:,10));
+avg_width_3 = nanmean(width.data(:,14));
+avg_width_4 = nanmean(width.data(:,18));
+avg_width_5 = nanmean(width.data(:,22));
+
+avg_widths = [avg_width_0,avg_width_1,avg_width_2,avg_width_3,avg_width_4,avg_width_5];
+
+plot(xg,avg_widths,'.',MarkerSize=20)
+xlabel('%XG')
+ylabel('Space and time averaged width')
+
+
+%make array for looping through time
+cols = 1:2:11;
+
+%% headcut calculations (for 0.2-0.5%XG)
+cols = 1:2:7;
+markerStyles = {'o','s','d','^','p','x','v','x'};
+colors = orderedcolors('meadow');  
+figure;
+
+for j = 1:length(cols)
+    i = cols(j);
+
+
+    %pull data for each %XG in loop
+    %find non-nan data
+    good_indices=find(headcut.data(:,i)>-1);
+
+    time_measurements = headcut.data(:,i);
+    headcut_measurements = headcut.data(:,i+1);
+
+    headcut_measurements = headcut_measurements(good_indices);
+    time_measurements = time_measurements(good_indices);
+    
+
+    %attempt fitting powerlaw
+    % logtime = log(time_measurements);
+    % log_headcut = log(headcut_measurements);
+    % curve_fit = fit(time_measurements, headcut_measurements, 'exp1');
+    
+    %plot width through time
+    hold on;
+    plot(time_measurements, headcut_measurements,'Color', colors(j, :), 'Marker', markerStyles{j},'LineWidth',1,'MarkerSize', 6,'LineStyle','none');
+end
+hold off;
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+legend('0.2%X.G.','0.3%X.G.','0.4%X.G.','0.5%X.G.');
+xlabel('Time [minutes]','FontSize',12,'FontWeight','normal');
+ylabel('Headcut Location [cm upstream from outlet]','FontSize',12,'FontWeight','normal');
+set(gca,'FontSize',12);
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'headcut_time_figure.png');
+
+
+%% supplementary width plots with stdev error bars 
+%make plot of average width through time
+figure;
+cols = 1:4:24;
+
+markerStyles = {'o','s','d','^','p','x','v','x'};
+colors = orderedcolors('meadow');  
+figure;
+
+for j = 1:length(cols)
+    i = cols(j);
+
+    %pull data for each %XG in loop
+    time_measurements = width.data(:,i);
+    width_measurements = width.data(:,i+1);
+    stdev= width.data(:,i+2);
+    sem= width.data(:,i+3);
+
+    %find non-nan data
+    good_indices=find(width.data(:,i)>-1);
+
+    width_measurements = width_measurements(good_indices);
+    time_measurements = time_measurements(good_indices);
+    stdev = stdev(good_indices);
+    sem = sem(good_indices); 
+   
+  
+    %plot width through time with stdev
+    errorbar(time_measurements,width_measurements,stdev,'Color', colors(j, :), 'Marker', markerStyles{j},'LineWidth',1,'MarkerSize', 6,'LineStyle','none');
+    hold on
+end 
+hold off;
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+legend('0%X.G.','0.1%X.G.','0.2%X.G.','0.3%X.G.','0.4%X.G.','0.5%X.G.');
+xlabel('Time [minutes]','FontSize',12,'FontWeight','normal');
+ylabel('Spatially averaged channel bank width [cm]','FontSize',12,'FontWeight','normal');
+set(gca,'FontSize',12);
+grid on;
+grid minor;
+box on;
+%title('Errorbars show standard deviation');
+saveas(gcf, 'bankwidths_time_errorbar_figure.png');
+
+%% plot time and space averaged width vs. %XG
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+markerStyles={'ko','ks','kd','k^','kp','kx','k+','kv','k>','k<'};
+figure;
+xg = [0,0.1,0.2,0.3,0.4,0.5];
+avg_width_0 = nanmean(width.data(:,2));
+stdev_0 = 2.994286481;
+sem_0 = 0.308837069;
+avg_width_1 = nanmean(width.data(:,6));
+stdev_1 =2.950285021;
+sem_1 =0.22366053; 
+avg_width_2 = nanmean(width.data(:,10));
+stdev_2 =0.74996184;
+sem_2=0.058208328;
+avg_width_3 = nanmean(width.data(:,14));
+stdev_3=0.539097613;
+sem_3=0.041716626;
+avg_width_4 = nanmean(width.data(:,18));
+stdev_4=0.826405024;
+sem_4 =0.078794627;
+avg_width_5 = nanmean(width.data(:,22));
+stdev_5=0.212743368;
+sem_5=0.023493575;
+
+
+
+avg_widths = [avg_width_0,avg_width_1,avg_width_2,avg_width_3,avg_width_4,avg_width_5];
+stdevs = [stdev_0,stdev_1,stdev_3,stdev_3,stdev_4,stdev_5];
+sems = [sem_0,sem_1,sem_2,sem_3,sem_4,sem_5];
+
+figure;
+errorbar(xg,avg_widths,stdevs,'k', 'LineStyle', 'none', 'LineWidth', 1,'HandleVisibility', 'off');
+hold on;
+plot(xg(1),avg_width_0,'ko','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0% XG');
+plot(xg(2),avg_width_1,'ks','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.1% XG');
+plot(xg(3),avg_width_2,'kd','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.2% XG');
+plot(xg(4),avg_width_3,'k^','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.3% XG');
+plot(xg(5),avg_width_4,'kp','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.4% XG');
+plot(xg(6),avg_width_5,'kx','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.5% XG');
+hold off; 
+set(gca,'FontSize',12);
+xlabel('%XG');
+ylabel('Space and Time Averaged Width (cm)','FontSize',12,'FontWeight','normal');
+%title('Errorbars show standard deviation','FontSize',12,'FontWeight','normal');
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'bankwidths_time_stdv_figure.png');
+%%
+figure;
+errorbar(xg,avg_widths,sems,'k', 'LineStyle', 'none', 'LineWidth', 1,'HandleVisibility', 'off');
+hold on;
+plot(xg(1),avg_width_0,'ko','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0% XG');
+plot(xg(2),avg_width_1,'ks','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.1% XG');
+plot(xg(3),avg_width_2,'kd','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.2% XG');
+plot(xg(4),avg_width_3,'k^','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.3% XG');
+plot(xg(5),avg_width_4,'kp','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.4% XG');
+plot(xg(6),avg_width_5,'kx','LineWidth',1.2,'LineStyle','none','MarkerSize',6,'DisplayName','0.5% XG');
+hold off; 
+set(gca,'FontSize',12);
+xlabel('%XG');
+ylabel('Space and Time Averaged Width (cm)','FontSize',12,'FontWeight','normal');
+grid on;
+grid minor;
+box on;
+%title('Errorbars show standard error of mean');
+saveas(gcf, 'bankwidths_time_sem_figure.png');
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>
