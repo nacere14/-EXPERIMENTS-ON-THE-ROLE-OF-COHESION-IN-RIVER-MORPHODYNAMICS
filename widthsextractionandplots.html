@@ -1,0 +1,782 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>widthsextractionandplots</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-06-10">
+<meta name="DC.source" content="widthsextractionandplots.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<h2>Contents</h2>
+<div>
+<ul>
+<li>
+<a href="#2">folder direc</a>
+</li>
+<li>
+<a href="#3">cleaning binary images</a>
+</li>
+<li>
+<a href="#4">strat looping</a>
+</li>
+<li>
+<a href="#6">then lets get average of y values</a>
+</li>
+<li>
+<a href="#8">get the widths : here we need to get a tangent line then where it intersects the top and bottom will be the lines of the widths</a>
+</li>
+<li>
+<a href="#9">widths should match dimensions of x array</a>
+</li>
+<li>
+<a href="#11">%% save widths for each xantham gum</a>
+</li>
+<li>
+<a href="#12">find average</a>
+</li>
+<li>
+<a href="#13">save widths for each xantham gum</a>
+</li>
+<li>
+<a href="#14">conert to c m</a>
+</li>
+<li>
+<a href="#15">converyt to cm</a>
+</li>
+<li>
+<a href="#16">Plotting</a>
+</li>
+<li>
+<a href="#19">time array</a>
+</li>
+<li>
+<a href="#20">normalized time</a>
+</li>
+<li>
+<a href="#23">widths xanthan gum</a>
+</li>
+<li>
+<a href="#24">Width calculations to fix time gap</a>
+</li>
+<li>
+<a href="#25">widths data</a>
+</li>
+<li>
+<a href="#26">times</a>
+</li>
+</ul>
+</div>
+<pre class="codeinput">clc;
+close <span class="string">all</span>;
+clear <span class="string">all</span>;
+</pre>
+<h2 id="2">folder direc</h2>
+<pre class="codeinput">folder=<span class="string">'/data1/nacere/Processing/XG01/Binary_images'</span>;
+files=dir(fullfile(folder, <span class="string">'binary*.png'</span>));
+widths_all=cell(length(files),1);
+</pre>
+<h2 id="3">cleaning binary images</h2>
+<pre class="codeinput">a=imread(<span class="string">'binary4.png'</span>);
+cl=imfill(a,<span class="string">'holes'</span>);
+figure;
+imshow(cl);
+<span class="comment">%for loop</span>
+</pre>
+<pre class="codeoutput error">Error using imread&gt;get_full_filename
+File "binary4.png" does not exist.
+
+Error in imread (line 372)
+        fullname = get_full_filename(filename);
+
+Error in widthsextractionandplots (line 9)
+a=imread('binary4.png');
+</pre>
+<h2 id="4">strat looping</h2>
+<pre class="codeinput">
+<span class="keyword">for</span> imgNum=1:length(files)
+</pre>
+<pre class="codeinput">    imgpath=fullfile(folder,files(imgNum).name);
+    img=imread(imgpath);
+    [height,width]=size(img);
+    img=imfill(img,<span class="string">'holes'</span>);
+    <span class="comment">% height of white channel</span>
+    height_channel=regionprops(img,<span class="string">'BoundingBox'</span>);
+    boundingbox=[height_channel.BoundingBox];
+    heights=boundingbox(4:4:end);
+
+    <span class="comment">%figure; imshow(img);</span>
+    <span class="comment">%getting x and y coordinates</span>
+    [y,x]=find(img);
+    xy=[x,y]; <span class="comment">%here column1=x and column 2=y; combine into a matrix</span>
+</pre>
+<h2 id="6">then lets get average of y values</h2>
+<pre class="codeinput">    <span class="comment">%first get unique x</span>
+
+    unique_x=unique(x);
+    <span class="keyword">for</span> i=1:length(unique_x)
+        avg_y(i)=mean(y(x==unique_x(i))); <span class="comment">%get vertical pos for each horiz to define smooth centerline</span>
+    <span class="keyword">end</span>
+</pre>
+<pre class="codeinput">    p=0.01;
+    fine_x=linspace(min(unique_x),max(unique_x),500);
+    spline_ft=csaps(unique_x,avg_y,p); <span class="comment">%cui smoothline</span>
+    smoothy=fnval(spline_ft, fine_x);<span class="comment">%evaluation @x to get smoth y</span>
+    figure;
+    imshow(img);
+    hold <span class="string">on</span>;
+    <span class="comment">%plot(unique_x,avg_y);</span>
+    plot(fine_x,smoothy,<span class="string">'b-'</span>,<span class="string">'LineWidth'</span>,4);
+    hold <span class="string">off</span>;
+</pre>
+<h2 id="8">get the widths : here we need to get a tangent line then where it intersects the top and bottom will be the lines of the widths</h2>
+<p>equation of tangent lines : point slope from eqaution of a straight line why tang slope? because it gives direction of centerline @ specific point use this formula: y-y1=mt(X-X1) mT= f'(x10=f(x1+h)-f(x1)/h</p>
+<pre class="codeinput">    <span class="comment">%slope change in y/change in x for middle line</span>
+    slopes = diff(smoothy) ./ diff(fine_x); <span class="comment">%FDM to get slope of tang</span>
+    slopes = [slopes, slopes(end)]; <span class="comment">%for dimensions so slops same ffinex</span>
+    perpen_slopes = -1 ./ slopes; <span class="comment">%as slopes should be 90degrewes</span>
+</pre>
+<h2 id="9">widths should match dimensions of x array</h2>
+<pre class="codeinput">    widths = zeros(1, length(fine_x));
+    figure;
+    imshow(img);
+    hold <span class="string">on</span>;
+    plot(fine_x, smoothy, <span class="string">'r-'</span>, <span class="string">'LineWidth'</span>, 2);
+    tang_length = 45; <span class="comment">% length of tan</span>
+    <span class="keyword">for</span> i = 1:length(fine_x)  <span class="comment">%looping trhough points on certline to get widths</span>
+        slope = perpen_slopes(i);
+        x0 = fine_x(i); <span class="comment">%here we get x and y coord of centerline in red</span>
+        y0 = smoothy(i);
+        <span class="comment">% maths done by hands to see if it makes sense to get xchange in x an y</span>
+     <span class="comment">% in tangent line</span>
+        dx = tang_length / sqrt(1 + slope^2);<span class="comment">%using pythagorean theorem (used to wonder after middle school when ill use it) %to get horizontal of tan line</span>
+        dy = slope * dx;
+        x_tan = [x0 - dx, x0 + dx];
+        y_tan = [y0 - dy, y0 + dy];
+        tangent_x = linspace(x_tan(1), x_tan(2), 100);
+         <span class="comment">% tangent should be from top and bottom of the image if 25 length is</span>
+         <span class="comment">% too long then getting the length of tan to not crss the image size</span>
+        tangent_y = slope * (tangent_x - x0) + y0;
+        tangent_x = max(1, min(size(img,2), tangent_x));
+        tangent_y = max(1, min(size(img,1), tangent_y));
+    <span class="comment">%we need to interpolate the tang as in the code given by professor where y-values were interpolated for both lines on the common x-range</span>
+        tangent_values = interp2(double(img), tangent_x, tangent_y, <span class="string">'linear'</span>, 0);
+    <span class="comment">% yo het the white channel is should be everything greater than 0 as</span>
+    <span class="comment">% white is 1 in binary</span>
+        white_channel = find(tangent_values == 1);
+        <span class="keyword">if</span> ~isempty(white_channel)
+            top_idx = white_channel(1); <span class="comment">%first white pixel on tan lin</span>
+            bottom_idx = white_channel(end); <span class="comment">%last</span>
+            x_top = tangent_x(top_idx); <span class="comment">%coord of x and y</span>
+            y_top = tangent_y(top_idx);
+            x_bottom = tangent_x(bottom_idx);
+            y_bottom = tangent_y(bottom_idx);
+        <span class="comment">% Plotting top and bottom to see</span>
+            <span class="comment">%plot(x_top, y_top, 'bo', 'MarkerSize', 6, 'MarkerFaceColor', 'b');</span>
+            <span class="comment">%plot(x_bottom, y_bottom, 'ro', 'MarkerSize', 6, 'MarkerFaceColor', 'r');</span>
+        <span class="comment">% ok now we have top and bottom values, we can use them to get widths as the distance line</span>
+            widths(i) = sqrt((x_bottom - x_top)^2 + (y_bottom - y_top)^2);
+        <span class="keyword">else</span>
+            widths(i) = 0; <span class="comment">% No width if no white  found</span>
+        <span class="keyword">end</span>
+    <span class="comment">% Plotting tangent line</span>
+        plot([x_tan(1), x_tan(2)], [y_tan(1), y_tan(2)], <span class="string">'g-'</span>, <span class="string">'LineWidth'</span>, 1);
+    <span class="keyword">end</span>
+    hold <span class="string">off</span>;
+    widths_all{imgNum}=widths;
+    <span class="comment">%histogram(widths);</span>
+    <span class="comment">%%figure;</span>
+    <span class="comment">%%hold on;</span>
+    <span class="comment">%for k=1:length(files)</span>
+        <span class="comment">%widths=widths;</span>
+        <span class="comment">%plot(1:length(widths), widths, 'r');</span>
+    <span class="comment">%end</span>
+    <span class="comment">%hold off;</span>
+
+    avg_y=[];
+</pre>
+<pre class="codeinput">
+<span class="keyword">end</span>
+</pre>
+<h2 id="11">%% save widths for each xantham gum</h2>
+<pre class="codeinput">save(fullfile(folder,<span class="string">'avgr_widthslast04thresh.mat'</span>),<span class="string">'avgr_widthsthreshxg4'</span>);
+</pre>
+<h2 id="12">find average</h2>
+<p>before finding the average, we need to not consider the zeros (where the missing data are located) so we can use the non zero function</p>
+<pre class="codeinput">
+<span class="comment">%for each xanthan gum take the non zeros widths then apply the mean on them</span>
+
+<span class="keyword">for</span> i=1:length(widths_all)
+    avgr_widths(i)=mean(nonzeros(widths_all{i}));
+<span class="keyword">end</span>
+</pre>
+<h2 id="13">save widths for each xantham gum</h2>
+<pre class="codeinput">save(fullfile(folder,<span class="string">'avgr_widthslast05.mat'</span>),<span class="string">'avgr_widths'</span>);
+</pre>
+<h2 id="14">conert to c m</h2>
+<pre class="codeinput">
+<span class="comment">%read ruler img</span>
+img_ruler=imread(<span class="string">'binary3.png'</span>);
+figure;imshow(img_ruler);
+[x,y]=ginput(2);
+ruler=sqrt((x(2)-x(1))^2 +(y(2)-y(1))^2);
+</pre>
+<h2 id="15">converyt to cm</h2>
+<p>see conversion .m file</p>
+<pre class="codeinput">
+<span class="comment">%then after converting our different metrics, they were saved into a folder</span>
+<span class="comment">%and uploaded below</span>
+</pre>
+<h2 id="16">Plotting</h2>
+<pre class="codeinput">clc;
+close <span class="string">all</span>;
+clear;
+</pre>
+<pre class="codeinput">data0=load(<span class="string">'widthscmxg0.mat'</span>);
+data1=load(<span class="string">"widthscmxg01.mat"</span>);
+data2=load(<span class="string">"widthscmxg02.mat"</span>);
+data3=load(<span class="string">"widthscmxg03.mat"</span>);
+data4=load(<span class="string">"widthscmxg04thresh.mat"</span>);
+data5=load(<span class="string">"widthscmxg05thresh.mat"</span>);
+
+widths0=data0.widthsxg0;
+widths1=data1.widthsxg1;
+widths2=data2.widthsxg2;
+widths3=data3.widthsxg3;
+widths4=data4.widthsxg4thrsh;
+widths5=data5.widthsxg5thresh;
+</pre>
+<pre class="codeinput">all_data={widths0;widths1;widths2;widths3;widths4;widths5};
+</pre>
+<h2 id="19">time array</h2>
+<pre class="codeinput">time0=load(<span class="string">'Timexg0.mat'</span>);
+time1=load(<span class="string">'Timexg01.mat'</span>);
+time2=load(<span class="string">'Timexg02.mat'</span>);
+time3=load(<span class="string">'Timexg03.mat'</span>);
+time4=load(<span class="string">'Timexg04.mat'</span>);
+time5=load(<span class="string">'Timexg05.mat'</span>);
+
+timexg0=time0.time_array;
+timexg1=time1.time_array;
+timexg2=time2.time_array;
+timexg3=time3.time_array;
+timexg4=time4.time_array;
+timexg5=time5.time_array;
+</pre>
+<h2 id="20">normalized time</h2>
+<pre class="codeinput">times_norxg0=(timexg0-min(timexg0))/(max(timexg0)-min(timexg0));
+times_norxg1=(timexg1-min(timexg1))/(max(timexg1)-min(timexg1));
+times_norxg2=(timexg2-min(timexg2))/(max(timexg2)-min(timexg2));
+times_norxg3=(timexg3-min(timexg3))/(max(timexg3)-min(timexg3));
+times_norxg4=(timexg4-min(timexg4))/(max(timexg4)-min(timexg4));
+times_norxg5=(timexg5-min(timexg5))/(max(timexg5)-min(timexg5));
+</pre>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+figure;
+hold <span class="string">on</span>;
+colors=orderedcolors(<span class="string">'meadow'</span>);
+markers = {<span class="string">'o'</span>, <span class="string">'s'</span>, <span class="string">'d'</span>, <span class="string">'^'</span>, <span class="string">'x'</span>, <span class="string">'*'</span>};
+plot(timexg0, widths0, <span class="string">'Color'</span>, colors(1,:), <span class="string">'Marker'</span>, markers{1}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0% XG'</span>);
+plot(timexg1, widths1, <span class="string">'Color'</span>, colors(2,:), <span class="string">'Marker'</span>, markers{2}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.1% XG'</span>);
+plot(timexg2, widths2, <span class="string">'Color'</span>, colors(3,:), <span class="string">'Marker'</span>, markers{3}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.2% XG'</span>);
+plot(timexg3, widths3, <span class="string">'Color'</span>, colors(4,:), <span class="string">'Marker'</span>, markers{4}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.3% XG'</span>);
+plot(timexg4, widths4, <span class="string">'Color'</span>, colors(5,:), <span class="string">'Marker'</span>, markers{5}, <span class="string">'LineWidth'</span>, 1,<span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.4% XG'</span>);
+plot(timexg5, widths5, <span class="string">'Color'</span>, colors(6,:), <span class="string">'Marker'</span>, markers{6}, <span class="string">'LineWidth'</span>, 1, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.5% XG'</span>);
+
+set(gca,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'Time (s)'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Spatially Averaged Active Channel Widths (cm)'</span>, <span class="string">'FontSize'</span>, 11, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'avgchannelwidthscm_time_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<pre class="codeinput">figure;
+hold <span class="string">on</span>;
+<span class="comment">%colors = {'b', 'r', 'g', 'm', 'c', 'k'};</span>
+colors=lines(6);
+markers = {<span class="string">'o'</span>, <span class="string">'s'</span>, <span class="string">'d'</span>, <span class="string">'^'</span>, <span class="string">'x'</span>, <span class="string">'*'</span>};
+plot(timexg0, widths0, [colors markers{1} ], <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0% Xanthan Gum'</span>);
+plot(timexg1, widths1, [colors markers{2} ], <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.1% Xanthan Gum'</span>);
+plot(timexg2, widths2, [colors markers{3} ], <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.2% Xanthan Gum'</span>);
+plot(timexg3, widths3, [colors markers{4} ], <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.3% Xanthan Gum'</span>);
+plot(timexg4, widths4, [colors markers{5} ], <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.4% Xanthan Gum'</span>);
+plot(timexg5, widths5, [colorsmarkers{6} ], <span class="string">'LineWidth'</span>, 1, <span class="string">'MarkerSize'</span>, 5, <span class="string">'DisplayName'</span>, <span class="string">'0.5% Xanthan Gum'</span>);
+
+set(gca, <span class="string">'FontSize'</span>, 8, <span class="string">'LineWidth'</span>, 1);
+xlabel(<span class="string">'Time (s)'</span>, <span class="string">'FontSize'</span>, 8, <span class="string">'FontWeight'</span>, <span class="string">'bold'</span>);
+ylabel(<span class="string">'Spatially Averaged Active Channel Widths (cm)'</span>, <span class="string">'FontSize'</span>, 8, <span class="string">'FontWeight'</span>, <span class="string">'bold'</span>);
+title(<span class="string">'Average Channel Widths vs Time for Different Xanthan Gum Concentrations'</span>, <span class="string">'FontSize'</span>, 8, <span class="string">'FontWeight'</span>, <span class="string">'bold'</span>);
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+<span class="comment">%grid on;</span>
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'avgchannelwidthscm_time_figure.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<h2 id="23">widths xanthan gum</h2>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+xg=[0;1;2;3;4;5];
+allwidths_avg=[mean(widths0),mean(widths1),mean(widths2),mean(widths3),mean(widths4),mean(widths5)];
+allwidths_std = [std(widths0), std(widths1), std(widths2),nanstd(widths3), std(widths4), std(widths5)];
+
+<span class="comment">% Plot</span>
+figure;
+errorbar(xg, allwidths_avg, allwidths_std, <span class="string">'k'</span>, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>, <span class="string">'LineWidth'</span>, 1,<span class="string">'HandleVisibility'</span>, <span class="string">'off'</span>);
+hold <span class="string">on</span>
+plot(xg(1),allwidths_avg(1),<span class="string">'ko'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0% Xanthan Gum'</span>);
+plot(xg(2),allwidths_avg(2),<span class="string">'ks'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.1% Xanthan Gum'</span>);
+plot(xg(3),allwidths_avg(3),<span class="string">'kd'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.2% Xanthan Gum'</span>);
+plot(xg(4),allwidths_avg(4),<span class="string">'k^'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.3% Xanthan Gum'</span>);
+plot(xg(5),allwidths_avg(5),<span class="string">'kp'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.4% Xanthan Gum'</span>);
+plot(xg(6),allwidths_avg(6),<span class="string">'kx'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'MarkerSize'</span>,6,<span class="string">'DisplayName'</span>,<span class="string">'0.5% Xanthan Gum'</span>);
+<span class="comment">%grid on;</span>
+set(gca,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'% Xanthan Gum'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Time and Space Averaged Widths (cm)'</span>, <span class="string">'FontSize'</span>, 11, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+<span class="comment">%legend('show', 'Location', 'best');</span>
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'xanthanwidthscm_time_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<h2 id="24">Width calculations to fix time gap</h2>
+<h2 id="25">widths data</h2>
+<pre class="codeinput">widths0=data0.widthsxg0;
+widths1=data1.widthsxg1;
+widths2=data2.widthsxg2;
+widths3=data3.widthsxg3;
+widths4=data4.widthsxg4thrsh;
+widths5=data5.widthsxg5thresh;
+</pre>
+<h2 id="26">times</h2>
+<pre class="codeinput">data=load(<span class="string">'flume_time_arrays_by_xg (1).mat'</span>);
+
+time1=data.xg_0;
+time2=data.xg_0_1;
+time3=data.xg_0_2;
+time4=data.xg_0_3;
+time5=data.xg_0_4;
+time6=data.xg_0_5;
+</pre>
+<pre class="codeinput">set(0, <span class="string">'DefaultAxesFontName'</span>, <span class="string">'TimesNewRoman'</span>);
+all_times = {time1, time2, time3, time4, time5, time6};
+all_widths = {widths0, widths1, widths2, widths3, widths4, widths5};
+labels = {<span class="string">'0% XG'</span>, <span class="string">'0.1% XG'</span>, <span class="string">'0.2% XG'</span>, <span class="string">'0.3% XG'</span>, <span class="string">'0.4% XG'</span>, <span class="string">'0.5% XG'</span>};
+colors = orderedcolors(<span class="string">'meadow'</span>);
+markers = {<span class="string">'o'</span>, <span class="string">'s'</span>, <span class="string">'d'</span>, <span class="string">'^'</span>, <span class="string">'x'</span>, <span class="string">'*'</span>};
+
+figure;
+hold <span class="string">on</span>;
+
+<span class="keyword">for</span> i = 1:length(all_times)
+    t = all_times{i};
+    w = all_widths{i};
+
+    <span class="comment">% Truncate both to the shorter length</span>
+    min_len = min(length(t), length(w));
+    t = t(1:min_len);
+    w = w(1:min_len);
+
+    plot(t, w, <span class="string">'Color'</span>, colors(i, :),<span class="string">'Marker'</span>, markers{i}, <span class="string">'LineStyle'</span>, <span class="string">'none'</span>,<span class="string">'LineWidth'</span>, 1,<span class="string">'MarkerSize'</span>, 5,<span class="string">'DisplayName'</span>, labels{i});
+<span class="keyword">end</span>
+set(gca,<span class="string">'FontSize'</span>,12);
+xlabel(<span class="string">'Time (min)'</span>, <span class="string">'FontSize'</span>, 12, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+ylabel(<span class="string">'Spatially Averaged Active Channel Widths (cm)'</span>, <span class="string">'FontSize'</span>, 11, <span class="string">'FontWeight'</span>, <span class="string">'normal'</span>);
+<span class="comment">%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');</span>
+legend(<span class="string">'show'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+grid <span class="string">on</span>;
+grid <span class="string">minor</span>;
+box <span class="string">on</span>;
+saveas(gcf, <span class="string">'avgchannelwidthscm_timegap_figurenolegend.png'</span>);
+hold <span class="string">off</span>;
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clc;
+close all;
+clear all;
+%% folder direc
+folder='/data1/nacere/Processing/XG01/Binary_images';
+files=dir(fullfile(folder, 'binary*.png'));
+widths_all=cell(length(files),1);
+%% cleaning binary images
+a=imread('binary4.png');
+cl=imfill(a,'holes');
+figure;
+imshow(cl);
+%for loop 
+%% strat looping
+for imgNum=1:length(files)
+    imgpath=fullfile(folder,files(imgNum).name);
+    img=imread(imgpath);
+    [height,width]=size(img);
+    img=imfill(img,'holes');
+    % height of white channel 
+    height_channel=regionprops(img,'BoundingBox');
+    boundingbox=[height_channel.BoundingBox];
+    heights=boundingbox(4:4:end);
+
+    %figure; imshow(img);
+    %getting x and y coordinates
+    [y,x]=find(img);
+    xy=[x,y]; %here column1=x and column 2=y; combine into a matrix
+    %% then lets get average of y values
+    %first get unique x 
+    
+    unique_x=unique(x);
+    for i=1:length(unique_x)
+        avg_y(i)=mean(y(x==unique_x(i))); %get vertical pos for each horiz to define smooth centerline
+    end
+    %%
+    p=0.01;
+    fine_x=linspace(min(unique_x),max(unique_x),500);
+    spline_ft=csaps(unique_x,avg_y,p); %cui smoothline 
+    smoothy=fnval(spline_ft, fine_x);%evaluation @x to get smoth y 
+    figure;
+    imshow(img);
+    hold on;
+    %plot(unique_x,avg_y);
+    plot(fine_x,smoothy,'b-','LineWidth',4);
+    hold off;
+    %% get the widths : here we need to get a tangent line then where it intersects the top and bottom will be the lines of the widths 
+    % equation of tangent lines : point slope from eqaution of a straight
+    % line why tang slope? because it gives direction of centerline @
+    % specific point
+    % use this formula: y-y1=mt(X-X1) mT= f'(x10=f(x1+h)-f(x1)/h 
+    %slope change in y/change in x for middle line
+    slopes = diff(smoothy) ./ diff(fine_x); %FDM to get slope of tang 
+    slopes = [slopes, slopes(end)]; %for dimensions so slops same ffinex
+    perpen_slopes = -1 ./ slopes; %as slopes should be 90degrewes
+
+    %% widths should match dimensions of x array
+    widths = zeros(1, length(fine_x)); 
+    figure;
+    imshow(img); 
+    hold on;
+    plot(fine_x, smoothy, 'r-', 'LineWidth', 2);
+    tang_length = 45; % length of tan 
+    for i = 1:length(fine_x)  %looping trhough points on certline to get widths
+        slope = perpen_slopes(i); 
+        x0 = fine_x(i); %here we get x and y coord of centerline in red 
+        y0 = smoothy(i); 
+        % maths done by hands to see if it makes sense to get xchange in x an y
+     % in tangent line
+        dx = tang_length / sqrt(1 + slope^2);%using pythagorean theorem (used to wonder after middle school when ill use it) %to get horizontal of tan line
+        dy = slope * dx; 
+        x_tan = [x0 - dx, x0 + dx]; 
+        y_tan = [y0 - dy, y0 + dy]; 
+        tangent_x = linspace(x_tan(1), x_tan(2), 100); 
+         % tangent should be from top and bottom of the image if 25 length is
+         % too long then getting the length of tan to not crss the image size 
+        tangent_y = slope * (tangent_x - x0) + y0;  
+        tangent_x = max(1, min(size(img,2), tangent_x)); 
+        tangent_y = max(1, min(size(img,1), tangent_y)); 
+    %we need to interpolate the tang as in the code given by professor where y-values were interpolated for both lines on the common x-range 
+        tangent_values = interp2(double(img), tangent_x, tangent_y, 'linear', 0); 
+    % yo het the white channel is should be everything greater than 0 as
+    % white is 1 in binary 
+        white_channel = find(tangent_values == 1); 
+        if ~isempty(white_channel) 
+            top_idx = white_channel(1); %first white pixel on tan lin
+            bottom_idx = white_channel(end); %last 
+            x_top = tangent_x(top_idx); %coord of x and y 
+            y_top = tangent_y(top_idx); 
+            x_bottom = tangent_x(bottom_idx); 
+            y_bottom = tangent_y(bottom_idx); 
+        % Plotting top and bottom to see 
+            %plot(x_top, y_top, 'bo', 'MarkerSize', 6, 'MarkerFaceColor', 'b'); 
+            %plot(x_bottom, y_bottom, 'ro', 'MarkerSize', 6, 'MarkerFaceColor', 'r'); 
+        % ok now we have top and bottom values, we can use them to get widths as the distance line  
+            widths(i) = sqrt((x_bottom - x_top)^2 + (y_bottom - y_top)^2);
+        else 
+            widths(i) = 0; % No width if no white  found 
+        end 
+    % Plotting tangent line 
+        plot([x_tan(1), x_tan(2)], [y_tan(1), y_tan(2)], 'g-', 'LineWidth', 1); 
+    end 
+    hold off; 
+    widths_all{imgNum}=widths;
+    %histogram(widths);
+    %%figure; 
+    %%hold on;
+    %for k=1:length(files)
+        %widths=widths; 
+        %plot(1:length(widths), widths, 'r');
+    %end
+    %hold off;
+
+    avg_y=[];
+end
+
+
+%% %% save widths for each xantham gum
+save(fullfile(folder,'avgr_widthslast04thresh.mat'),'avgr_widthsthreshxg4');
+
+
+%% find average 
+% before finding the average, we need to not consider the zeros (where the
+% missing data are located) so we can use the non zero function 
+%for each xanthan gum take the non zeros widths then apply the mean on them
+
+for i=1:length(widths_all)
+    avgr_widths(i)=mean(nonzeros(widths_all{i}));
+end
+%% save widths for each xantham gum
+save(fullfile(folder,'avgr_widthslast05.mat'),'avgr_widths');
+%% conert to c m 
+%read ruler img
+img_ruler=imread('binary3.png');
+figure;imshow(img_ruler);
+[x,y]=ginput(2);
+ruler=sqrt((x(2)-x(1))^2 +(y(2)-y(1))^2);
+%% converyt to cm 
+% see conversion .m file 
+%then after converting our different metrics, they were saved into a folder
+%and uploaded below
+%% Plotting
+clc;
+close all;
+clear;
+%%
+data0=load('widthscmxg0.mat');
+data1=load("widthscmxg01.mat");
+data2=load("widthscmxg02.mat");
+data3=load("widthscmxg03.mat");
+data4=load("widthscmxg04thresh.mat");
+data5=load("widthscmxg05thresh.mat");
+
+widths0=data0.widthsxg0;
+widths1=data1.widthsxg1;
+widths2=data2.widthsxg2;
+widths3=data3.widthsxg3;
+widths4=data4.widthsxg4thrsh;
+widths5=data5.widthsxg5thresh;
+%%
+all_data={widths0;widths1;widths2;widths3;widths4;widths5};
+
+%% time array 
+time0=load('Timexg0.mat');
+time1=load('Timexg01.mat');
+time2=load('Timexg02.mat');
+time3=load('Timexg03.mat');
+time4=load('Timexg04.mat');
+time5=load('Timexg05.mat');
+
+timexg0=time0.time_array;
+timexg1=time1.time_array;
+timexg2=time2.time_array;
+timexg3=time3.time_array;
+timexg4=time4.time_array;
+timexg5=time5.time_array;
+%% normalized time 
+times_norxg0=(timexg0-min(timexg0))/(max(timexg0)-min(timexg0));
+times_norxg1=(timexg1-min(timexg1))/(max(timexg1)-min(timexg1));
+times_norxg2=(timexg2-min(timexg2))/(max(timexg2)-min(timexg2));
+times_norxg3=(timexg3-min(timexg3))/(max(timexg3)-min(timexg3));
+times_norxg4=(timexg4-min(timexg4))/(max(timexg4)-min(timexg4));
+times_norxg5=(timexg5-min(timexg5))/(max(timexg5)-min(timexg5));
+%% 
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+figure; 
+hold on; 
+colors=orderedcolors('meadow');
+markers = {'o', 's', 'd', '^', 'x', '*'};
+plot(timexg0, widths0, 'Color', colors(1,:), 'Marker', markers{1}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0% XG'); 
+plot(timexg1, widths1, 'Color', colors(2,:), 'Marker', markers{2}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.1% XG'); 
+plot(timexg2, widths2, 'Color', colors(3,:), 'Marker', markers{3}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.2% XG');
+plot(timexg3, widths3, 'Color', colors(4,:), 'Marker', markers{4}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.3% XG');
+plot(timexg4, widths4, 'Color', colors(5,:), 'Marker', markers{5}, 'LineWidth', 1,'LineStyle', 'none', 'MarkerSize', 5, 'DisplayName', '0.4% XG'); 
+plot(timexg5, widths5, 'Color', colors(6,:), 'Marker', markers{6}, 'LineWidth', 1, 'LineStyle', 'none','MarkerSize', 5, 'DisplayName', '0.5% XG');
+
+set(gca,'FontSize',12);
+xlabel('Time (s)', 'FontSize', 12, 'FontWeight', 'normal');
+ylabel('Spatially Averaged Active Channel Widths (cm)', 'FontSize', 11, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'avgchannelwidthscm_time_figurenolegend.png');
+hold off;
+%% 
+figure; 
+hold on; 
+%colors = {'b', 'r', 'g', 'm', 'c', 'k'};
+colors=lines(6);
+markers = {'o', 's', 'd', '^', 'x', '*'};
+plot(timexg0, widths0, [colors markers{1} ], 'LineWidth', 1, 'MarkerSize', 5, 'DisplayName', '0% Xanthan Gum'); 
+plot(timexg1, widths1, [colors markers{2} ], 'LineWidth', 1, 'MarkerSize', 5, 'DisplayName', '0.1% Xanthan Gum'); 
+plot(timexg2, widths2, [colors markers{3} ], 'LineWidth', 1, 'MarkerSize', 5, 'DisplayName', '0.2% Xanthan Gum');
+plot(timexg3, widths3, [colors markers{4} ], 'LineWidth', 1, 'MarkerSize', 5, 'DisplayName', '0.3% Xanthan Gum');
+plot(timexg4, widths4, [colors markers{5} ], 'LineWidth', 1, 'MarkerSize', 5, 'DisplayName', '0.4% Xanthan Gum'); 
+plot(timexg5, widths5, [colorsmarkers{6} ], 'LineWidth', 1, 'MarkerSize', 5, 'DisplayName', '0.5% Xanthan Gum');
+
+set(gca, 'FontSize', 8, 'LineWidth', 1);
+xlabel('Time (s)', 'FontSize', 8, 'FontWeight', 'bold');
+ylabel('Spatially Averaged Active Channel Widths (cm)', 'FontSize', 8, 'FontWeight', 'bold');
+title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+%grid on;
+box on;
+saveas(gcf, 'avgchannelwidthscm_time_figure.png');
+hold off;
+%% widths xanthan gum 
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+xg=[0;1;2;3;4;5];
+allwidths_avg=[mean(widths0),mean(widths1),mean(widths2),mean(widths3),mean(widths4),mean(widths5)];
+allwidths_std = [std(widths0), std(widths1), std(widths2),nanstd(widths3), std(widths4), std(widths5)];
+
+% Plot
+figure;
+errorbar(xg, allwidths_avg, allwidths_std, 'k', 'LineStyle', 'none', 'LineWidth', 1,'HandleVisibility', 'off');
+hold on
+plot(xg(1),allwidths_avg(1),'ko','LineWidth',1,'MarkerSize',6,'DisplayName','0% Xanthan Gum');
+plot(xg(2),allwidths_avg(2),'ks','LineWidth',1,'MarkerSize',6,'DisplayName','0.1% Xanthan Gum');
+plot(xg(3),allwidths_avg(3),'kd','LineWidth',1,'MarkerSize',6,'DisplayName','0.2% Xanthan Gum');
+plot(xg(4),allwidths_avg(4),'k^','LineWidth',1,'MarkerSize',6,'DisplayName','0.3% Xanthan Gum');
+plot(xg(5),allwidths_avg(5),'kp','LineWidth',1,'MarkerSize',6,'DisplayName','0.4% Xanthan Gum');
+plot(xg(6),allwidths_avg(6),'kx','LineWidth',1,'MarkerSize',6,'DisplayName','0.5% Xanthan Gum');
+%grid on;
+set(gca,'FontSize',12);
+xlabel('% Xanthan Gum', 'FontSize', 12, 'FontWeight', 'normal');
+ylabel('Time and Space Averaged Widths (cm)', 'FontSize', 11, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+%legend('show', 'Location', 'best');
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'xanthanwidthscm_time_figurenolegend.png');
+hold off;
+%% Width calculations to fix time gap
+%%  widths data 
+widths0=data0.widthsxg0;
+widths1=data1.widthsxg1;
+widths2=data2.widthsxg2;
+widths3=data3.widthsxg3;
+widths4=data4.widthsxg4thrsh;
+widths5=data5.widthsxg5thresh;
+%% times
+data=load('flume_time_arrays_by_xg (1).mat');
+
+time1=data.xg_0;
+time2=data.xg_0_1;
+time3=data.xg_0_2;
+time4=data.xg_0_3;
+time5=data.xg_0_4;
+time6=data.xg_0_5;
+%%
+set(0, 'DefaultAxesFontName', 'TimesNewRoman');
+all_times = {time1, time2, time3, time4, time5, time6};
+all_widths = {widths0, widths1, widths2, widths3, widths4, widths5};
+labels = {'0% XG', '0.1% XG', '0.2% XG', '0.3% XG', '0.4% XG', '0.5% XG'};
+colors = orderedcolors('meadow');
+markers = {'o', 's', 'd', '^', 'x', '*'};
+
+figure;
+hold on;
+
+for i = 1:length(all_times)
+    t = all_times{i};
+    w = all_widths{i};
+
+    % Truncate both to the shorter length
+    min_len = min(length(t), length(w));
+    t = t(1:min_len);
+    w = w(1:min_len);
+
+    plot(t, w, 'Color', colors(i, :),'Marker', markers{i}, 'LineStyle', 'none','LineWidth', 1,'MarkerSize', 5,'DisplayName', labels{i});
+end
+set(gca,'FontSize',12);
+xlabel('Time (min)', 'FontSize', 12, 'FontWeight', 'normal');
+ylabel('Spatially Averaged Active Channel Widths (cm)', 'FontSize', 11, 'FontWeight', 'normal');
+%title('Average Channel Widths vs Time for Different Xanthan Gum Concentrations', 'FontSize', 8, 'FontWeight', 'bold');
+legend('show', 'Location', 'best');
+grid on;
+grid minor;
+box on;
+saveas(gcf, 'avgchannelwidthscm_timegap_figurenolegend.png');
+hold off;
+
+##### SOURCE END #####
+-->
+</body>
+</html>
